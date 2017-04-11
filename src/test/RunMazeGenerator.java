@@ -11,7 +11,7 @@ import algorithms.mazeGenerators.SimpleMazeGenerator;
 public class RunMazeGenerator {
     public static void main(String[] args) {
         testMazeGenerator(new SimpleMazeGenerator());
-        //im here
+        //HEREEEE
 //      testMazeGenerator(new MyMazeGenerator());
     }
 
