@@ -11,10 +11,6 @@ import algorithms.mazeGenerators.SimpleMazeGenerator;
 public class RunMazeGenerator {
     public static void main(String[] args) {
         testMazeGenerator(new SimpleMazeGenerator());
-        for (int i = 0; i < 10; i++) {
-            testMazeGenerator(new SimpleMazeGenerator());
-            //IM HERE!!!
-        }
 //      testMazeGenerator(new MyMazeGenerator());
     }
 
