@@ -25,8 +25,7 @@ public class Position {
     public String toString() {
         return String.format("{%d,%d}", this.rowIndex, this.columnIndex);
     }
-
-
+    //here
     public boolean equals(Position other) {
         return (other.rowIndex == this.rowIndex && other.columnIndex == this.columnIndex);
     }
