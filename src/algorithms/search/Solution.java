@@ -8,6 +8,10 @@ import java.util.ArrayList;
 public class Solution {
     ArrayList<AState> solutionPath;
 
+    public Solution(ArrayList<AState> solutionPath) {
+        this.solutionPath = solutionPath;
+    }
+
     // TODO: write some code here!!
     public ArrayList<AState> getSolutionPath() {
         return this.solutionPath;

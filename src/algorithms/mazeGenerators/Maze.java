@@ -16,6 +16,10 @@ public class Maze {
         return this.goalPosition;
     }
 
+    public int[][] getData() {
+        return this.data;
+    }
+
     public void print() {
 
         for (int i = 0; i < this.data.length; i++) {

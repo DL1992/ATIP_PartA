@@ -8,6 +8,11 @@ public abstract class AState {
     AState cameFrom;
 
     // TODO: write some code here!!
+
+    public AState() {
+        this.cameFrom = null;
+    }
+
     public void setCost(int cost) {
         this.cost = cost;
     }
@@ -17,4 +22,5 @@ public abstract class AState {
     }
 
     public abstract boolean equals(AState other);
+
 }

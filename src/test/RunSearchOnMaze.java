@@ -2,11 +2,8 @@ package test;
 
 import algorithms.mazeGenerators.IMazeGenerator;
 import algorithms.mazeGenerators.Maze;
-import algorithms.mazeGenerators.MyMazeGenerator;
-import algorithms.search.AState;
-import algorithms.search.ISearchable;
-import algorithms.search.ISearchingAlgorithm;
-import algorithms.search.Solution;
+import algorithms.mazeGenerators.SimpleMazeGenerator;
+import algorithms.search.*;
 
 import java.util.ArrayList;
 
@@ -15,13 +12,28 @@ import java.util.ArrayList;
  */
 public class RunSearchOnMaze {
     public static void main(String[] args) {
-        IMazeGenerator mg = new MyMazeGenerator();
-        Maze maze = mg.generate(30, 30);
+        IMazeGenerator mg = new SimpleMazeGenerator();
+//        IMazeGenerator mg = new MyMazeGenerator();
+        Maze maze = mg.generate(100, 100);
+        maze.print();
         SearchableMaze searchableMaze = new SearchableMaze(maze);
+        AState state = searchableMaze.getStartState();
+        System.out.println(String.format("start Position: %s", state));
+        ArrayList<AState> ans = searchableMaze.getAllPossibleStates(state);
+        for (int i = 0; i < ans.size(); i++) {
+            System.out.println(String.format("%s. %s", i, ans.get(i)));
+        }
+        AState gstate = searchableMaze.getGoalState();
+        System.out.println(String.format("goal Position: %s", gstate));
+        ArrayList<AState> ans1 = searchableMaze.getAllPossibleStates(gstate);
+        for (int i = 0; i < ans1.size(); i++) {
+            System.out.println(String.format("%s. %s", i, ans1.get(i)));
+        }
 
-        solveProblem(searchableMaze, new BreadthFirstSearch());
-        solveProblem(searchableMaze, new DepthFirstSearch());
-        solveProblem(searchableMaze, new BestFirstSearch());
+
+//        solveProblem(searchableMaze, new BreadthFirstSearch());
+//        solveProblem(searchableMaze, new DepthFirstSearch());
+//        solveProblem(searchableMaze, new BestFirstSearch());
     }
 
     private static void solveProblem(ISearchable domain, ISearchingAlgorithm searcher) {
