@@ -27,11 +27,16 @@ public class SearchableMaze implements ISearchable {
 
     @Override
     public ArrayList<AState> getAllPossibleStates(AState state) {
-        ArrayList<AState> ansArrayList = new ArrayList<>();
-        MazeState mazeState = (MazeState) state;
-        int[][] mazeData = this.maze.getData();
-        addALLToAnsArrayList(ansArrayList, mazeData, mazeState.getPosition().getRowIndex(), mazeState.getPosition().getColumnIndex());
-        return ansArrayList;
+        if (null != state) {
+            ArrayList<AState> ansArrayList = new ArrayList<>();
+            MazeState mazeState = (MazeState) state;
+            if (null != this.maze) {
+                int[][] mazeData = this.maze.getData();
+                addALLToAnsArrayList(ansArrayList, mazeData, mazeState.getPosition().getRowIndex(), mazeState.getPosition().getColumnIndex());
+                return ansArrayList;
+            }
+        }
+        return null;
     }
 
     private void addALLToAnsArrayList(ArrayList<AState> ansArrayList, int[][] mazeData, int rowIndex, int columnIndex) {

@@ -4,7 +4,7 @@ package algorithms.search;
  * Created by user on 12/04/2017.
  */
 public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
-    private int evaluatedNodes;
+    protected int evaluatedNodes;
 
     public ASearchingAlgorithm() {
         this.evaluatedNodes = 0;

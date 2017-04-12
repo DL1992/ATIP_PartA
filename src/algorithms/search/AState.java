@@ -21,6 +21,18 @@ public abstract class AState {
         this.cameFrom = cameFrom;
     }
 
-    public abstract boolean equals(AState other);
+    public int getCost() {
+        return this.cost;
+    }
 
+    public AState getCameFrom() {
+        return this.cameFrom;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return equals((AState) obj);
+    }
+
+    public abstract boolean equals(AState other);
 }
