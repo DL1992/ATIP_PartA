@@ -64,7 +64,7 @@ public class Maze {
         this.data = data;
     }
 
-    private boolean checkPosition(Position Position) {
+    public boolean checkPosition(Position Position) {
         if (Position != null) {
             if (this.data != null) {
                 if (Position.getRowIndex() < this.data.length && Position.getRowIndex() >= 0) {

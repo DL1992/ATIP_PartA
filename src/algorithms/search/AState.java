@@ -3,13 +3,14 @@ package algorithms.search;
 /**
  * Created by user on 12/04/2017.
  */
-public abstract class AState {
+public abstract class AState implements Comparable<AState>{
     int cost;
     AState cameFrom;
 
     // TODO: write some code here!!
 
     public AState() {
+        int cost = 1;
         this.cameFrom = null;
     }
 
@@ -32,6 +33,20 @@ public abstract class AState {
     @Override
     public boolean equals(Object obj) {
         return equals((AState) obj);
+    }
+
+    @Override
+    public int compareTo(AState other){
+        // compareTo should return < 0 if this is supposed to be
+        // less than other, > 0 if this is supposed to be greater than
+        // other and 0 if they are supposed to be equal
+        if( this.getCost() < other.getCost() )  {
+            return -1;
+        }
+        if( this.getCost() > other.getCost() )  {
+            return 1;
+        }
+        return 0;
     }
 
     public abstract boolean equals(AState other);

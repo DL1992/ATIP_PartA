@@ -10,7 +10,6 @@ public class Position {
     public Position(int rowIndex, int columnIndex) {
         this.rowIndex = rowIndex;
         this.columnIndex = columnIndex;
-
     }
 
     public int getRowIndex() {
