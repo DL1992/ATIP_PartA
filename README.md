@@ -1,2 +1,1 @@
-﻿YAY! This is fun?!?!
-feel good
+﻿go tell your friends about it ><__><

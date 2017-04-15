@@ -1,13 +1,13 @@
 package algorithms.search;
 
-import algorithms.mazeGenerators.Maze;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.PriorityQueue;
 
 /**
  * Created by Vlad on 4/15/2017.
  */
-public class BreadthFirstSearch extends ASearchingAlgorithm {
+public class BestFirstSearch extends ASearchingAlgorithm {
 
     @Override
     public Solution solve(ISearchable domain) {
@@ -15,15 +15,15 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
 
         AState startState = domain.getStartState();
         AState goalState = domain.getGoalState();
-        startState.setCost(1);
-        PriorityQueue<AState> queue = new PriorityQueue<>();
-        ArrayList<AState> stateList = new ArrayList<>();
+        startState.setCost(0);
+        PriorityQueue<AState> open = new PriorityQueue<>();
+        ArrayList<AState> closed = new ArrayList<>();
 
-        stateList.add(startState);
-        queue.add(startState);
-        while(!queue.isEmpty()){
+        open.add(startState);
+        while(!open.isEmpty()){
             this.evaluatedNodes++;
-            AState currentState = queue.remove();
+            AState currentState = open.remove();
+            closed.add(currentState);
             if( currentState.equals(goalState) ){
                 ans = new Solution(createSolution(currentState));
                 return ans;
@@ -31,11 +31,15 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
             ArrayList<AState> successors = domain.getAllPossibleStates(currentState);
             for (AState state :
                     successors) {
-                if(!stateList.contains(state)) {
+                if(!closed.contains(state) && !open.contains(state)) {
                     state.setCameFrom(currentState);
-                    state.setCost(0);
-                    stateList.add(state);
-                    queue.add(state);
+                    open.add(state);
+                }
+                else if(state.getCost() < currentState.getCost() ){
+                    if(!open.contains(state)){
+                        open.remove(state);
+                    }
+                    open.add(state);
                 }
             }
         }
@@ -49,12 +53,13 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
             solutionArrayList.add(currentState);
             currentState = currentState.getCameFrom();
         }
-        Collections.reverse(solutionArrayList);;
+        Collections.reverse(solutionArrayList);;;
         return solutionArrayList;
     }
 
     @Override
     public String getName() {
-        return "Breadth First Search";
+        return "Best First Search";
     }
+
 }
