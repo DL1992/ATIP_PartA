@@ -1,5 +1,6 @@
 package algorithms.search;
 
+import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 
 /**
@@ -20,6 +21,11 @@ public class MazeState extends AState {
     public boolean equals(AState other) {
         MazeState compare = (MazeState) other;
         return equals(compare);
+    }
+
+    @Override
+    public void setCameFrom(AState cameFrom) {
+        this.cameFrom = cameFrom;
     }
 
     private boolean equals(MazeState other) {
