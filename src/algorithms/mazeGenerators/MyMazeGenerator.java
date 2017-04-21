@@ -10,8 +10,8 @@ public class MyMazeGenerator extends AMazeGenerator {
     private Random randomGenerator;
 
     @Override
-    public Maze generate(int numOfRows, int numOfCols){
-        randomGenerator = new Random();
+    public Maze generate(int numOfRows, int numOfCols) {
+        this.randomGenerator = new Random();
         Maze maze = new Maze();
         int[][] data = new int[numOfRows][numOfCols];
         initData(data);
@@ -20,10 +20,9 @@ public class MyMazeGenerator extends AMazeGenerator {
         return maze;
     }
 
-    private void usePrim(Maze maze,  int numOfRows, int numOfCols){
+    private void usePrim(Maze maze, int numOfRows, int numOfCols) {
         ArrayList<Position> wallList = new ArrayList<Position>();
         ArrayList<Position> mazeList = new ArrayList<Position>();
-
         Position startPos = createPosition(numOfRows, numOfCols);
         mazeList.add(startPos);
         maze.setStartPosition(startPos);
@@ -32,10 +31,10 @@ public class MyMazeGenerator extends AMazeGenerator {
         addWallsToList(maze, wallList, startPos);
 
         int index;
-        while (!wallList.isEmpty()){
-            index =  randomGenerator.nextInt(wallList.size());
+        while (!wallList.isEmpty()) {
+            index = this.randomGenerator.nextInt(wallList.size());
             Position randomWall = wallList.get(index);
-            if(countNeighbors(maze, randomWall) == 1){
+            if (countNeighbors(maze, randomWall) == 1) {
                 setPartOfMaze(mazeList, maze, randomWall);
                 addWallsToList(maze, wallList, randomWall);
             }
@@ -54,20 +53,20 @@ public class MyMazeGenerator extends AMazeGenerator {
     }
 
     private void addWallsToList(Maze maze, ArrayList<Position> wallList, Position position) {
-        Position up = new Position(position.getRowIndex()+1, position.getColumnIndex());
-        Position down = new Position(position.getRowIndex()-1, position.getColumnIndex());
-        Position left = new Position(position.getRowIndex(), position.getColumnIndex()-1);
-        Position right = new Position(position.getRowIndex(), position.getColumnIndex()+1);
-        if( maze.checkPosition(up)){
+        Position up = new Position(position.getRowIndex() + 1, position.getColumnIndex());
+        Position down = new Position(position.getRowIndex() - 1, position.getColumnIndex());
+        Position left = new Position(position.getRowIndex(), position.getColumnIndex() - 1);
+        Position right = new Position(position.getRowIndex(), position.getColumnIndex() + 1);
+        if (maze.checkPosition(up)) {
             wallList.add(up);
         }
-        if( maze.checkPosition(down)){
+        if (maze.checkPosition(down)) {
             wallList.add(down);
         }
-        if( maze.checkPosition(left)){
+        if (maze.checkPosition(left)) {
             wallList.add(left);
         }
-        if( maze.checkPosition(right)){
+        if (maze.checkPosition(right)) {
             wallList.add(right);
         }
 
@@ -75,10 +74,10 @@ public class MyMazeGenerator extends AMazeGenerator {
 
     private Position pickEndPos(Maze maze, ArrayList<Position> mazeList) {
         Position startPosition = maze.getStartPosition();
-        int index = randomGenerator.nextInt(mazeList.size());
+        int index = this.randomGenerator.nextInt(mazeList.size());
         Position endPosition = mazeList.get(index);
-        while( startPosition.equals(endPosition) ) {
-            index = randomGenerator.nextInt(mazeList.size());
+        while (startPosition.equals(endPosition)) {
+            index = this.randomGenerator.nextInt(mazeList.size());
             endPosition = mazeList.get(index);
         }
         return endPosition;
@@ -88,28 +87,28 @@ public class MyMazeGenerator extends AMazeGenerator {
         int neighborCounter = 0;
         int[][] data = maze.getData();
 
-        Position up = new Position(position.getRowIndex()+1, position.getColumnIndex());
-        Position down = new Position(position.getRowIndex()-1, position.getColumnIndex());
-        Position left = new Position(position.getRowIndex(), position.getColumnIndex()-1);
-        Position right = new Position(position.getRowIndex(), position.getColumnIndex()+1);
+        Position up = new Position(position.getRowIndex() + 1, position.getColumnIndex());
+        Position down = new Position(position.getRowIndex() - 1, position.getColumnIndex());
+        Position left = new Position(position.getRowIndex(), position.getColumnIndex() - 1);
+        Position right = new Position(position.getRowIndex(), position.getColumnIndex() + 1);
 
-        if( maze.checkPosition(up)){
-            if(data[up.getRowIndex()][up.getColumnIndex()] == 0){
+        if (maze.checkPosition(up)) {
+            if (data[up.getRowIndex()][up.getColumnIndex()] == 0) {
                 neighborCounter++;
             }
         }
-        if( maze.checkPosition(down)){
-            if(data[down.getRowIndex()][down.getColumnIndex()] == 0){
+        if (maze.checkPosition(down)) {
+            if (data[down.getRowIndex()][down.getColumnIndex()] == 0) {
                 neighborCounter++;
             }
         }
-        if( maze.checkPosition(left)){
-            if(data[left.getRowIndex()][left.getColumnIndex()] == 0){
+        if (maze.checkPosition(left)) {
+            if (data[left.getRowIndex()][left.getColumnIndex()] == 0) {
                 neighborCounter++;
             }
         }
-        if( maze.checkPosition(right)){
-            if(data[right.getRowIndex()][right.getColumnIndex()] == 0){
+        if (maze.checkPosition(right)) {
+            if (data[right.getRowIndex()][right.getColumnIndex()] == 0) {
                 neighborCounter++;
             }
         }

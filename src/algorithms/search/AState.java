@@ -7,8 +7,6 @@ public abstract class AState implements Comparable<AState>{
     int cost;
     AState cameFrom;
 
-    // TODO: write some code here!!
-
     public AState() {
         this.cameFrom = null;
     }

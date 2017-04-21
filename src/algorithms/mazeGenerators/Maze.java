@@ -43,9 +43,9 @@ public class Maze {
             }
         } else {
             if (isPos(i, j, this.startPosition)) {
-                System.out.println("S" + "},");
+                System.out.println("S" + "}");
             } else if (isPos(i, j, this.goalPosition)) {
-                System.out.println("E" + "},");
+                System.out.println("E" + "}");
             } else {
                 System.out.println(this.data[i][j] + "}");
             }
