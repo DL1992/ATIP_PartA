@@ -1,8 +1,7 @@
 package algorithms.search;
 
-import algorithms.mazeGenerators.Maze;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 /**
  * Created by Vlad on 4/15/2017.
@@ -11,46 +10,37 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
 
     @Override
     public Solution solve(ISearchable domain) {
-        Solution ans;
+        if (null != domain) {
+            Solution ans;
+            AState startState = domain.getStartState();
+            AState goalState = domain.getGoalState();
+//            startState.setCost(1);
+            PriorityQueue<AState> openStateQueue = new PriorityQueue<>();
+            ArrayList<AState> visitStateList = new ArrayList<>();
 
-        AState startState = domain.getStartState();
-        AState goalState = domain.getGoalState();
-        startState.setCost(1);
-        PriorityQueue<AState> queue = new PriorityQueue<>();
-        ArrayList<AState> stateList = new ArrayList<>();
-
-        stateList.add(startState);
-        queue.add(startState);
-        while(!queue.isEmpty()){
-            this.evaluatedNodes++;
-            AState currentState = queue.remove();
-            if( currentState.equals(goalState) ){
-                ans = new Solution(createSolution(currentState));
-                return ans;
-            }
-            ArrayList<AState> successors = domain.getAllPossibleStates(currentState);
-            for (AState state :
-                    successors) {
-                if(!stateList.contains(state)) {
-                    state.setCameFrom(currentState);
-                    state.setCost(0);
-                    stateList.add(state);
-                    queue.add(state);
+            visitStateList.add(startState);
+            openStateQueue.add(startState);
+            while (!openStateQueue.isEmpty()) {
+                this.evaluatedNodes++;
+                AState currentState = openStateQueue.remove();
+                if (currentState.equals(goalState)) {
+                    ans = new Solution(createSolution(currentState));
+                    return ans;
+                }
+                ArrayList<AState> successors = domain.getAllPossibleStates(currentState);
+                for (AState state :
+                        successors) {
+                    if (!visitStateList.contains(state)) {
+                        state.setCameFrom(currentState);
+                        state.setCost(0);
+                        visitStateList.add(state);
+                        openStateQueue.add(state);
+                    }
                 }
             }
         }
-        return new Solution(createSolution(goalState));
-    }
-
-    private ArrayList<AState> createSolution(AState goalState) {
-        ArrayList<AState> solutionArrayList = new ArrayList<>();
-        AState currentState = goalState;
-        while (null != currentState) {
-            solutionArrayList.add(currentState);
-            currentState = currentState.getCameFrom();
-        }
-        Collections.reverse(solutionArrayList);;
-        return solutionArrayList;
+        //why do we need this??
+        return null;
     }
 
     @Override

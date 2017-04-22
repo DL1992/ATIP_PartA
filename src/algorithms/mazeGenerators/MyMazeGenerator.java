@@ -21,8 +21,8 @@ public class MyMazeGenerator extends AMazeGenerator {
     }
 
     private void usePrim(Maze maze, int numOfRows, int numOfCols) {
-        ArrayList<Position> wallList = new ArrayList<Position>();
-        ArrayList<Position> mazeList = new ArrayList<Position>();
+        ArrayList<Position> wallList = new ArrayList<>();
+        ArrayList<Position> mazeList = new ArrayList<>();
         Position startPos = createPosition(numOfRows, numOfCols);
         mazeList.add(startPos);
         maze.setStartPosition(startPos);

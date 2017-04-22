@@ -1,10 +1,6 @@
 package test;
 
-import algorithms.mazeGenerators.IMazeGenerator;
-import algorithms.mazeGenerators.Maze;
-import algorithms.mazeGenerators.Position;
-import algorithms.mazeGenerators.SimpleMazeGenerator;
-import algorithms.mazeGenerators.MyMazeGenerator;
+import algorithms.mazeGenerators.*;
 
 
 /**
@@ -12,7 +8,7 @@ import algorithms.mazeGenerators.MyMazeGenerator;
  */
 public class RunMazeGenerator {
     public static void main(String[] args) {
-//        testMazeGenerator(new SimpleMazeGenerator());
+        testMazeGenerator(new SimpleMazeGenerator());
         testMazeGenerator(new MyMazeGenerator());
     }
 
@@ -22,7 +18,7 @@ public class RunMazeGenerator {
         // generate another maze
         Maze maze = mazeGenerator.generate(10/*rows*/, 10/*columns*/);
         // prints the maze
-         maze.print();
+        maze.print();
         // get the maze entrance
         Position startPosition = maze.getStartPosition();
         // print the start position

@@ -1,7 +1,6 @@
 package algorithms.search;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Stack;
 
 /**
@@ -34,18 +33,6 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
         }
         return null;
     }
-
-    private ArrayList<AState> createSolution(AState goalState) {
-        ArrayList<AState> solutionArrayList = new ArrayList<>();
-        AState currentState = goalState;
-        while (null != currentState) {
-            solutionArrayList.add(currentState);
-            currentState = currentState.getCameFrom();
-        }
-        Collections.reverse(solutionArrayList);
-        return solutionArrayList;
-    }
-
 
     @Override
     public String getName() {

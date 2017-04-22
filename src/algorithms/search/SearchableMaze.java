@@ -32,25 +32,27 @@ public class SearchableMaze implements ISearchable {
             MazeState mazeState = (MazeState) state;
             if (null != this.maze) {
                 int[][] mazeData = this.maze.getData();
-                addALLToAnsArrayList(ansArrayList, mazeData, mazeState.getPosition().getRowIndex(), mazeState.getPosition().getColumnIndex());
+                addALLToAnsArrayList(ansArrayList, mazeData, mazeState, mazeState.getPosition().getRowIndex(), mazeState.getPosition().getColumnIndex());
                 return ansArrayList;
             }
         }
         return null;
     }
 
-    private void addALLToAnsArrayList(ArrayList<AState> ansArrayList, int[][] mazeData, int rowIndex, int columnIndex) {
-        addToAnsArrayList(ansArrayList, mazeData, rowIndex - 1, columnIndex);
-        addToAnsArrayList(ansArrayList, mazeData, rowIndex, columnIndex + 1);
-        addToAnsArrayList(ansArrayList, mazeData, rowIndex + 1, columnIndex);
-        addToAnsArrayList(ansArrayList, mazeData, rowIndex, columnIndex - 1);
+    private void addALLToAnsArrayList(ArrayList<AState> ansArrayList, int[][] mazeData, MazeState mazeState, int rowIndex, int columnIndex) {
+        addToAnsArrayList(ansArrayList, mazeData, mazeState, rowIndex - 1, columnIndex);
+        addToAnsArrayList(ansArrayList, mazeData, mazeState, rowIndex, columnIndex + 1);
+        addToAnsArrayList(ansArrayList, mazeData, mazeState, rowIndex + 1, columnIndex);
+        addToAnsArrayList(ansArrayList, mazeData, mazeState, rowIndex, columnIndex - 1);
     }
 
-    private void addToAnsArrayList(ArrayList<AState> ansArrayList, int[][] mazeData, int rowIndex, int colIndex) {
+    private void addToAnsArrayList(ArrayList<AState> ansArrayList, int[][] mazeData, MazeState mazeState, int rowIndex, int colIndex) {
         if (rowIndex >= 0 && rowIndex < mazeData.length) {
             if (colIndex >= 0 && colIndex < mazeData[rowIndex].length) {
                 if (mazeData[rowIndex][colIndex] == 0) {
-                    ansArrayList.add(new MazeState(new Position(rowIndex, colIndex)));
+                    MazeState mazeStateToArrayList = new MazeState(new Position(rowIndex, colIndex));
+                    mazeStateToArrayList.setCost(mazeState.getCost() + 1);
+                    ansArrayList.add(mazeStateToArrayList);
                 }
             }
         }
