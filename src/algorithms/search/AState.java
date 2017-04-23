@@ -8,10 +8,10 @@ public abstract class AState implements Comparable<AState> {
     protected int cost;
     protected AState cameFrom;
 
-    public AState(String state) {
+    public AState(String state, int cost, AState cameFrom) {
         this.state = state;
-        this.cost = 0;
-        this.cameFrom = null;
+        this.cost = cost;
+        this.cameFrom = cameFrom;
     }
 
     public void setCost(int cost) {
@@ -36,7 +36,7 @@ public abstract class AState implements Comparable<AState> {
     }
 
     public abstract boolean equals(AState other);
-    
+
     @Override
     public int compareTo(AState other) {
         // compareTo should return < 0 if this is supposed to be

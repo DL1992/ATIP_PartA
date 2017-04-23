@@ -8,8 +8,8 @@ import algorithms.mazeGenerators.Position;
 public class MazeState extends AState {
     private Position position;
 
-    public MazeState(Position position) {
-        super(position.toString());
+    public MazeState(Position position, int cost, AState cameFrom) {
+        super(position.toString(), cost, cameFrom);
         this.position = position;
     }
 
