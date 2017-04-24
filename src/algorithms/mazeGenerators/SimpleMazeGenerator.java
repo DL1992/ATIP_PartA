@@ -63,11 +63,4 @@ public class SimpleMazeGenerator extends AMazeGenerator {
             maze.setGoalPosition(createPosition(numOfRows, numOfCols));
         } while (null == maze.getGoalPosition());
     }
-
-//    private Position createPosition(int numOfRows, int numOfCols) {
-//        int positionRowIndex = (int) (Math.random() * (numOfRows - 1));
-//        int positionColIndex = (int) (Math.random() * (numOfCols - 1));
-//        return new Position(positionRowIndex, positionColIndex);
-//    }
-
 }

@@ -19,8 +19,11 @@ public class MazeState extends AState {
 
     @Override
     public boolean equals(AState other) {
-        MazeState compare = (MazeState) other;
-        return equals(compare);
+        if (other != null) {
+            MazeState compare = (MazeState) other;
+            return equals(compare);
+        }
+        return false;
     }
 
     @Override

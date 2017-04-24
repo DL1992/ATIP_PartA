@@ -31,8 +31,8 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
                 for (AState state :
                         successors) {
                     if (!visitStateList.contains(state)) {
-                        state.setCameFrom(currentState);
-                        state.setCost(0);
+//                        state.setCameFrom(currentState);
+//                        state.setCost(0);
                         visitStateList.add(state);
                         openStateQueue.add(state);
                     }

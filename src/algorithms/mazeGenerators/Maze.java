@@ -31,6 +31,7 @@ public class Maze {
         }
     }
 
+    
     private void printCell(int i, int j, boolean flag) {
 
         if (!flag) {

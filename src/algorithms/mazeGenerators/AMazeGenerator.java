@@ -4,6 +4,7 @@ package algorithms.mazeGenerators;
  * Created by user on 11/04/2017.
  */
 public abstract class AMazeGenerator implements IMazeGenerator {
+
     @Override
     public abstract Maze generate(int numOfRows, int numOfCols);
 
@@ -23,7 +24,7 @@ public abstract class AMazeGenerator implements IMazeGenerator {
 
         }
     }
-
+//
     protected Position createPosition(int numOfRows, int numOfCols) {
         int positionRowIndex = (int) (Math.random() * (numOfRows - 1));
         int positionColIndex = (int) (Math.random() * (numOfCols - 1));
