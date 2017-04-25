@@ -4,7 +4,7 @@ package algorithms.mazeGenerators;
  * This class is the Interface for a maze generator.
  * the purpose of a maze generator is to generate a random maze.
  *
- * @author Vlad ser
+ * @author Vladislav Sergienko
  * @author Doron Laadan
  */
 public interface IMazeGenerator {
@@ -12,7 +12,7 @@ public interface IMazeGenerator {
     /**
      * Generate a random maze.
      * A maze should be a grid of rows and cols.
-     * A maze should have a start position and a goal position and at least one soultion.
+     * A maze should have a start position and a goal position and at least one soultion(a way to get from start to goal).
      *
      * @param numOfRows the number of rows in the maze.
      * @param numOfCols the number of columns in the maze.
