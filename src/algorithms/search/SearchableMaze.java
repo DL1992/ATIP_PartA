@@ -25,16 +25,16 @@ public class SearchableMaze implements ISearchable {
     }
 
     @Override
-    /**
-     * return a new MazeState with default params
+    /*
+      return a new MazeState with default params
      */
     public AState getStartState() {
         return new MazeState(this.maze.getStartPosition(), 0, null);
     }
 
     @Override
-    /**
-     * return a new MazeState with default params
+    /*
+      return a new MazeState with default params
      */
     public AState getGoalState() {
         return new MazeState(this.maze.getGoalPosition(), 0, null);
@@ -86,7 +86,9 @@ public class SearchableMaze implements ISearchable {
             if (colIndex >= 0 && colIndex < mazeData[rowIndex].length) {
                 if (mazeData[rowIndex][colIndex] == 0) {
                     MazeState mazeStateToArrayList = new MazeState(new Position(rowIndex, colIndex), mazeState.getCost() + 1, mazeState);
-                    ansArrayList.add(mazeStateToArrayList);
+                    if (!(mazeStateToArrayList.equals(mazeState.getCameFrom()))) {
+                        ansArrayList.add(mazeStateToArrayList);
+                    }
                 }
             }
         }

@@ -2,20 +2,20 @@ package test;
 
 import algorithms.mazeGenerators.IMazeGenerator;
 import algorithms.mazeGenerators.Maze;
-import algorithms.mazeGenerators.SimpleMazeGenerator;
+import algorithms.mazeGenerators.MyMazeGenerator;
 import algorithms.search.*;
 
 import java.util.ArrayList;
 
 /**
- * Created by user.
+ * Created by user on 11/04/2017.
  */
 public class RunSearchOnMaze {
     public static void main(String[] args) {
         long lstartTime = System.currentTimeMillis();
-        IMazeGenerator mg = new SimpleMazeGenerator();
-//        IMazeGenerator mg = new MyMazeGenerator();
-        Maze maze = mg.generate(1000, 1000);
+//        IMazeGenerator mg = new SimpleMazeGenerator();
+        IMazeGenerator mg = new MyMazeGenerator();
+        Maze maze = mg.generate(3, 3);
         maze.print();
         SearchableMaze searchableMaze = new SearchableMaze(maze);
 

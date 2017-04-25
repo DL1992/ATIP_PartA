@@ -9,11 +9,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 /**
- * Created by user on 22/04/2017.
+ * This class is junit for bestFirstSearch
+ *
+ * @author Vladislav Sergienko
+ * @author Doron Laadan
  */
 public class UnitTestingBestFirstSearch {
-    ASearchingAlgorithm bestFirstSearch;
-    SearchableMaze searchableMaze;
+    private ASearchingAlgorithm bestFirstSearch;
+    private SearchableMaze searchableMaze;
 
     @Before
     public void setUp() throws Exception {
@@ -44,7 +47,7 @@ public class UnitTestingBestFirstSearch {
 
     @Test
     public void testSolveEvaluatedNodesShouldBe2() throws Exception {
-        this.searchableMaze = new SearchableMaze(new MyMazeGenerator().generate(2, 1));
+        this.searchableMaze = new SearchableMaze(new MyMazeGenerator().generate(1, 2));
         this.bestFirstSearch.solve(this.searchableMaze);
         assertEquals(2, this.bestFirstSearch.getNumberOfNodesEvaluated());
 
