@@ -47,11 +47,8 @@ public abstract class AMazeGenerator implements IMazeGenerator {
      * @return a new Position representing a position in a maze
      */
     protected Position createPosition(int numOfRows, int numOfCols) {
-
-//        int positionRowIndex = (int) (Math.random() * (numOfRows - 1));
         int positionRowIndex = this.randomGenerator.nextInt(numOfRows);
         int positionColIndex = this.randomGenerator.nextInt(numOfCols);
-//        int positionColIndex = (int) (Math.random() * (numOfCols - 1));
         return new Position(positionRowIndex, positionColIndex);
     }
 }

@@ -3,6 +3,7 @@ package algorithms.search;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
+//TODO: write javadoc.
 
 /**
  * Created by Vlad on 4/15/2017.
@@ -23,7 +24,7 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
 
             startState.setCost(0);
 
-            visitStateHashMap.put(startState.toString(), startState) ;
+            visitStateHashMap.put(startState.toString(), startState);
             openStateQueue.add(startState);
 
             while (!openStateQueue.isEmpty()) {

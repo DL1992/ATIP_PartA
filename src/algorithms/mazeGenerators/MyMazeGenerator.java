@@ -1,7 +1,7 @@
 package algorithms.mazeGenerators;
 
 import java.util.ArrayList;
-//TODO: javadoc of class here.
+//TODO: javadoc of class here. trying to figure out a change for it to run faster!
 
 /**
  * This class generate a maze using the prim algorithm.

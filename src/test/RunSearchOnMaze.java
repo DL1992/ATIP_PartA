@@ -2,7 +2,7 @@ package test;
 
 import algorithms.mazeGenerators.IMazeGenerator;
 import algorithms.mazeGenerators.Maze;
-import algorithms.mazeGenerators.MyMazeGenerator;
+import algorithms.mazeGenerators.SimpleMazeGenerator;
 import algorithms.search.*;
 
 import java.util.ArrayList;
@@ -12,15 +12,19 @@ import java.util.ArrayList;
  */
 public class RunSearchOnMaze {
     public static void main(String[] args) {
-//        IMazeGenerator mg = new SimpleMazeGenerator();
-        IMazeGenerator mg = new MyMazeGenerator();
-        Maze maze = mg.generate(300, 300);
+        long lstartTime = System.currentTimeMillis();
+        IMazeGenerator mg = new SimpleMazeGenerator();
+//        IMazeGenerator mg = new MyMazeGenerator();
+        Maze maze = mg.generate(1000, 1000);
         maze.print();
         SearchableMaze searchableMaze = new SearchableMaze(maze);
 
         solveProblem(searchableMaze, new BreadthFirstSearch());
-//        solveProblem(searchableMaze, new DepthFirstSearch());
-//        solveProblem(searchableMaze, new BestFirstSearch());
+        solveProblem(searchableMaze, new DepthFirstSearch());
+        solveProblem(searchableMaze, new BestFirstSearch());
+        long end = System.currentTimeMillis();
+        long ans = end - lstartTime;
+        System.out.println(String.format("start time: %s. end time: %s. total:%s", lstartTime, end, ans));
     }
 
     private static void solveProblem(ISearchable domain, ISearchingAlgorithm searcher) {

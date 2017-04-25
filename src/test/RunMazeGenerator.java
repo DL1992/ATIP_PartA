@@ -1,9 +1,6 @@
 package test;
 
-import algorithms.mazeGenerators.IMazeGenerator;
-import algorithms.mazeGenerators.Maze;
-import algorithms.mazeGenerators.MyMazeGenerator;
-import algorithms.mazeGenerators.Position;
+import algorithms.mazeGenerators.*;
 
 
 /**
@@ -11,18 +8,18 @@ import algorithms.mazeGenerators.Position;
  */
 public class RunMazeGenerator {
     public static void main(String[] args) {
-//        testMazeGenerator(new SimpleMazeGenerator());
+        testMazeGenerator(new SimpleMazeGenerator());
         testMazeGenerator(new MyMazeGenerator());
     }
 
     private static void testMazeGenerator(IMazeGenerator mazeGenerator) {
         // prints the time it takes the algorithm to run
-        System.out.println(String.format("Maze generation time(ms): %s", mazeGenerator.measureAlgorithmTimeMillis(300/*rows*/, 300/*columns*/)));
+        System.out.println(String.format("Maze generation time(ms): %s", mazeGenerator.measureAlgorithmTimeMillis(100/*rows*/, 100/*columns*/)));
         // generate another maze
-        Maze maze = mazeGenerator.generate(1/*rows*/, 2/*columns*/);
+        Maze maze = mazeGenerator.generate(1000/*rows*/, 1000/*columns*/);
         // prints the maze
         maze.print();
-        // get the maze entrance
+//         get the maze entrance
         Position startPosition = maze.getStartPosition();
         // print the start position
         System.out.println(String.format("Start Position: %s", startPosition)); // format "{row,column}"

@@ -2,6 +2,7 @@ package algorithms.search;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
+//TODO: write javadoc, change to hashMap
 
 /**
  * Created by Vlad on 4/15/2017.
@@ -31,12 +32,10 @@ public class BestFirstSearch extends ASearchingAlgorithm {
                     if (!closed.contains(state) && !open.contains(state)) {
                         state.setCameFrom(currentState);
                         open.add(state);
-                    }
-                    else {
+                    } else {
                         AState oldState = startState;
-                        for(int i=0; i<closed.size(); i++)
-                        {
-                            if( (closed.get(i)).equals(state) ){
+                        for (int i = 0; i < closed.size(); i++) {
+                            if ((closed.get(i)).equals(state)) {
                                 oldState = closed.get(i);
                             }
                         }
