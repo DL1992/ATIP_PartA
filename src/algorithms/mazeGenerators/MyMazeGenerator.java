@@ -1,7 +1,6 @@
 package algorithms.mazeGenerators;
 
 import java.util.ArrayList;
-import java.util.Random;
 //TODO: javadoc of class here.
 
 /**
@@ -12,39 +11,48 @@ import java.util.Random;
  * @author Doron Laadan
  */
 public class MyMazeGenerator extends AMazeGenerator {
-    private Random randomGenerator;
+//    private Random randomGenerator;
 
     @Override
     /**
-     * genertae a random maze using the prim's algorithm.
+     * generta a random maze using the prim's algorithm.
      */
     public Maze generate(int numOfRows, int numOfCols) {
-        this.randomGenerator = new Random();
-        Maze maze = new Maze();
-        int[][] data = new int[numOfRows][numOfCols];
-        initData(data);
-        maze.setData(data);
-        usePrim(maze, numOfRows, numOfCols);
-        return maze;
+        if (numOfRows > 0 && numOfCols > 0) {
+            if (!(numOfRows == 1 && numOfCols == 1)) {
+//                this.randomGenerator = new Random();
+                Maze maze = new Maze();
+                int[][] data = new int[numOfRows][numOfCols];
+                initData(data);
+                maze.setData(data);
+                usePrim(maze, numOfRows, numOfCols);
+                return maze;
+            }
+        }
+        return null;
     }
 
+    /**
+     * @param maze
+     * @param numOfRows
+     * @param numOfCols
+     */
     private void usePrim(Maze maze, int numOfRows, int numOfCols) {
         ArrayList<Position> wallList = new ArrayList<>();
         ArrayList<Position> mazeList = new ArrayList<>();
         Position startPos = createPosition(numOfRows, numOfCols);
-        mazeList.add(startPos);
         maze.setStartPosition(startPos);
 
         setPartOfMaze(mazeList, maze, startPos);
-        addWallsToList(maze, wallList, startPos);
+        addWallsToList(maze, wallList, mazeList, startPos);
 
-        int index;
+        int index; // saves a index of the random pick wall
         while (!wallList.isEmpty()) {
             index = this.randomGenerator.nextInt(wallList.size());
             Position randomWall = wallList.get(index);
             if (countNeighbors(maze, randomWall) == 1) {
                 setPartOfMaze(mazeList, maze, randomWall);
-                addWallsToList(maze, wallList, randomWall);
+                addWallsToList(maze, wallList, mazeList, randomWall);
             }
             wallList.remove(index);
         }
@@ -60,24 +68,23 @@ public class MyMazeGenerator extends AMazeGenerator {
         mazeList.add(position);
     }
 
-    private void addWallsToList(Maze maze, ArrayList<Position> wallList, Position position) {
+    private void addWallsToList(Maze maze, ArrayList<Position> wallList, ArrayList<Position> mazeList, Position position) {
         Position up = new Position(position.getRowIndex() + 1, position.getColumnIndex());
         Position down = new Position(position.getRowIndex() - 1, position.getColumnIndex());
         Position left = new Position(position.getRowIndex(), position.getColumnIndex() - 1);
         Position right = new Position(position.getRowIndex(), position.getColumnIndex() + 1);
-        if (maze.checkPosition(up)) {
+        if (maze.checkPosition(up) && !mazeList.contains(up)) {
             wallList.add(up);
         }
-        if (maze.checkPosition(down)) {
+        if (maze.checkPosition(down) && !mazeList.contains(down)) {
             wallList.add(down);
         }
-        if (maze.checkPosition(left)) {
+        if (maze.checkPosition(left) && !mazeList.contains(left)) {
             wallList.add(left);
         }
-        if (maze.checkPosition(right)) {
+        if (maze.checkPosition(right) && !mazeList.contains(right)) {
             wallList.add(right);
         }
-
     }
 
     private Position pickEndPos(Maze maze, ArrayList<Position> mazeList) {

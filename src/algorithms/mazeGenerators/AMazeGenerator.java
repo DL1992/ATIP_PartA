@@ -1,5 +1,7 @@
 package algorithms.mazeGenerators;
 
+import java.util.Random;
+
 /**
  * This class is abstract class of a maze generator.
  *
@@ -7,6 +9,7 @@ package algorithms.mazeGenerators;
  * @author Doron Laadan
  */
 public abstract class AMazeGenerator implements IMazeGenerator {
+    protected Random randomGenerator = new Random();
 
     @Override
     public abstract Maze generate(int numOfRows, int numOfCols);
@@ -44,8 +47,11 @@ public abstract class AMazeGenerator implements IMazeGenerator {
      * @return a new Position representing a position in a maze
      */
     protected Position createPosition(int numOfRows, int numOfCols) {
-        int positionRowIndex = (int) (Math.random() * (numOfRows - 1));
-        int positionColIndex = (int) (Math.random() * (numOfCols - 1));
+
+//        int positionRowIndex = (int) (Math.random() * (numOfRows - 1));
+        int positionRowIndex = this.randomGenerator.nextInt(numOfRows);
+        int positionColIndex = this.randomGenerator.nextInt(numOfCols);
+//        int positionColIndex = (int) (Math.random() * (numOfCols - 1));
         return new Position(positionRowIndex, positionColIndex);
     }
 }

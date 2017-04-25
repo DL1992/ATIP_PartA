@@ -9,6 +9,7 @@ package algorithms.mazeGenerators;
  */
 public class SimpleMazeGenerator extends AMazeGenerator {
 
+
     @Override
     /**
      * generate a completely random maze.
@@ -16,13 +17,18 @@ public class SimpleMazeGenerator extends AMazeGenerator {
      * creates a straight path between them and then randomly breaking walls.
      */
     public Maze generate(int numOfRows, int numOfCols) {
-        Maze maze = new Maze();
-        int[][] data = new int[numOfRows][numOfCols];
-        initData(data); //init all the cells to walls
-        maze.setData(data);
-        SetPositions(maze, numOfRows, numOfCols);
-        setMazeData(data, maze);
-        return maze;
+        if (numOfRows > 0 && numOfCols > 0) {
+            if (!(numOfRows == 1 && numOfCols == 1)) {
+                Maze maze = new Maze();
+                int[][] data = new int[numOfRows][numOfCols];
+                initData(data); //init all the cells to walls
+                maze.setData(data);
+                SetPositions(maze, numOfRows, numOfCols);
+                setMazeData(data, maze);
+                return maze;
+            }
+        }
+        return null;
     }
 
     /**

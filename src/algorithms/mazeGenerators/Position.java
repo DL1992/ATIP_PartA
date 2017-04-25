@@ -44,13 +44,23 @@ public class Position {
         return String.format("{%d,%d}", this.rowIndex, this.columnIndex);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return equals((Position) obj);
+    }
+
     /**
      * check if the position is the same as another Position.
      *
      * @param other is the Position to compare.
      * @return true if it's the same position, false otherwise.
      */
+
+
     public boolean equals(Position other) {
-        return (other.rowIndex == this.rowIndex && other.columnIndex == this.columnIndex);
+        if (null != other) {
+            return (other.rowIndex == this.rowIndex && other.columnIndex == this.columnIndex);
+        }
+        return false;
     }
 }
