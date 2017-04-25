@@ -2,14 +2,22 @@ package algorithms.mazeGenerators;
 
 import java.util.ArrayList;
 import java.util.Random;
+//TODO: javadoc of class here.
 
 /**
- * Created by Vlad on 4/15/2017.
+ * This class generate a maze using the prim algorithm.
+ * it extends the abstract Class AMazeGenerator
+ *
+ * @author Vladislav Sergienko
+ * @author Doron Laadan
  */
 public class MyMazeGenerator extends AMazeGenerator {
     private Random randomGenerator;
 
     @Override
+    /**
+     * genertae a random maze using the prim's algorithm.
+     */
     public Maze generate(int numOfRows, int numOfCols) {
         this.randomGenerator = new Random();
         Maze maze = new Maze();
