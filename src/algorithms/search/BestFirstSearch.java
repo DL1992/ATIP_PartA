@@ -14,14 +14,12 @@ public class BestFirstSearch extends ASearchingAlgorithm {
             Solution ans;
             AState startState = domain.getStartState();
             AState goalState = domain.getGoalState();
-//            startState.setCost(0);
             PriorityQueue<AState> open = new PriorityQueue<>();
             ArrayList<AState> closed = new ArrayList<>();
-
             open.add(startState);
             while (!open.isEmpty()) {
                 this.evaluatedNodes++;
-                AState currentState = open.remove();
+                AState currentState = open.poll();
                 closed.add(currentState);
                 if (currentState.equals(goalState)) {
                     ans = new Solution(createSolution(currentState));
@@ -33,17 +31,26 @@ public class BestFirstSearch extends ASearchingAlgorithm {
                     if (!closed.contains(state) && !open.contains(state)) {
                         state.setCameFrom(currentState);
                         open.add(state);
-                    } else if (state.getCost() < currentState.getCost()) {
-                        if (!open.contains(state)) {
-                            open.remove(state);
+                    }
+                    else {
+                        AState oldState = startState;
+                        for(int i=0; i<closed.size(); i++)
+                        {
+                            if( (closed.get(i)).equals(state) ){
+                                oldState = closed.get(i);
+                            }
                         }
-                        open.add(state);
+                        if (state.getCost() < oldState.getCost()) {
+                            closed.remove(oldState);
+                            if (open.contains(state)) {
+                                open.remove(state);
+                            }
+                            open.add(state);
+                        }
                     }
                 }
             }
         }
-        //Why do we need this??
-//        return new Solution(createSolution(goalState));
         return null;
     }
 
