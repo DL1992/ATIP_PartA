@@ -1,6 +1,7 @@
 package algorithms.search;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.PriorityQueue;
 
 /**
@@ -15,14 +16,14 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
             Solution ans;
 
             PriorityQueue<AState> openStateQueue = new PriorityQueue<>();
-            ArrayList<AState> visitStateList = new ArrayList<>();
-
+//            ArrayList<AState> visitStateList = new ArrayList<>();
+            HashMap<String, AState> visitStateHashMap = new HashMap<>();
             AState startState = domain.getStartState();
             AState goalState = domain.getGoalState();
 
             startState.setCost(0);
 
-            visitStateList.add(startState);
+            visitStateHashMap.put(startState.toString(), startState) ;
             openStateQueue.add(startState);
 
             while (!openStateQueue.isEmpty()) {
@@ -37,9 +38,9 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
                 ArrayList<AState> successors = domain.getAllPossibleStates(currentState);
                 for (AState state :
                         successors) {
-                    if (!visitStateList.contains(state)) {
+                    if (!visitStateHashMap.containsKey(state.toString())) {
                         state.setCameFrom(currentState);
-                        visitStateList.add(state);
+                        visitStateHashMap.put(state.toString(), state);
                         openStateQueue.add(state);
                     }
                 }
