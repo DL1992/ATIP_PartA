@@ -16,11 +16,10 @@ public class Position {
     static HashMap<String, Position> posPool = new HashMap<>();
 
 
-    public static Position getPosition(int rowIndex, int columnIndex){
-        if( posPool.containsKey(String.format("{%d,%d}", rowIndex, columnIndex)) ){
+    public static Position getPosition(int rowIndex, int columnIndex) {
+        if (posPool.containsKey(String.format("{%d,%d}", rowIndex, columnIndex))) {
             return posPool.get(String.format("{%d,%d}", rowIndex, columnIndex));
-        }
-        else{
+        } else {
             return new Position(rowIndex, columnIndex);
         }
     }
@@ -34,7 +33,7 @@ public class Position {
     private Position(int rowIndex, int columnIndex) {
         this.rowIndex = rowIndex;
         this.columnIndex = columnIndex;
-        posPool.put(this.toString(),this);
+        //posPool.put(this.toString(),this);
     }
 
     /**

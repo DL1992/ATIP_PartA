@@ -1,7 +1,6 @@
 package algorithms.mazeGenerators;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 //TODO: javadoc of class here. trying to figure out a change for it to run faster!
 
@@ -42,8 +41,6 @@ public class MyMazeGenerator extends AMazeGenerator {
     private void usePrim(Maze maze, int numOfRows, int numOfCols) {
 
         HashSet<String> mazeHS = new HashSet<>();
-//        HashMap<String, Position> mazeHM = new HashMap<>();
-        //HashMap<String, Position> wallHM = new HashMap<>();
         ArrayList<Position> wallList = new ArrayList<>();
         ArrayList<Position> mazeList = new ArrayList<>();
 
@@ -77,16 +74,16 @@ public class MyMazeGenerator extends AMazeGenerator {
     }
 
     private void addWallsToList(Maze maze, HashSet<String> mazeHM, ArrayList<Position> wallList, Position position) {
-        if (maze.checkIndexes(position.getRowIndex() + 1, position.getColumnIndex()) && !mazeHM.contains( String.format("{%d,%d}", position.getRowIndex() + 1, position.getColumnIndex()) )) {
+        if (maze.checkIndexes(position.getRowIndex() + 1, position.getColumnIndex()) && !mazeHM.contains(String.format("{%d,%d}", position.getRowIndex() + 1, position.getColumnIndex()))) {
             wallList.add(Position.getPosition(position.getRowIndex() + 1, position.getColumnIndex()));
         }
         if (maze.checkIndexes(position.getRowIndex() - 1, position.getColumnIndex()) && !mazeHM.contains(String.format("{%d,%d}", position.getRowIndex() - 1, position.getColumnIndex()))) {
             wallList.add(Position.getPosition(position.getRowIndex() - 1, position.getColumnIndex()));
         }
-        if (maze.checkIndexes(position.getRowIndex(), position.getColumnIndex() - 1) && !mazeHM.contains(String.format("{%d,%d}", position.getRowIndex(), position.getColumnIndex() - 1 ))) {
+        if (maze.checkIndexes(position.getRowIndex(), position.getColumnIndex() - 1) && !mazeHM.contains(String.format("{%d,%d}", position.getRowIndex(), position.getColumnIndex() - 1))) {
             wallList.add(Position.getPosition(position.getRowIndex(), position.getColumnIndex() - 1));
         }
-        if (maze.checkIndexes(position.getRowIndex(), position.getColumnIndex() + 1) && !mazeHM.contains(String.format("{%d,%d}", position.getRowIndex(), position.getColumnIndex() + 1 ))) {
+        if (maze.checkIndexes(position.getRowIndex(), position.getColumnIndex() + 1) && !mazeHM.contains(String.format("{%d,%d}", position.getRowIndex(), position.getColumnIndex() + 1))) {
             wallList.add(Position.getPosition(position.getRowIndex(), position.getColumnIndex() + 1));
         }
     }

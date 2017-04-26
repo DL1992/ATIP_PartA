@@ -48,4 +48,19 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
         Collections.reverse(solutionArrayList);
         return solutionArrayList;
     }
+
+    /**
+     * helper function for searching algorithms, make sure the domain is legal.
+     * not null, and has a proper maze.
+     *
+     * @param domain the domain we want to check.
+     * @return true if the domain is legal, false otherwise.
+     */
+    protected boolean checkDomain(ISearchable domain) {
+        if (null != domain) {
+            if (null != domain.getStartState() && null != domain.getGoalState())
+                return true;
+        }
+        return false;
+    }
 }

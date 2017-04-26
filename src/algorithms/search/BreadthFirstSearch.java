@@ -12,7 +12,7 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
 
     @Override
     public Solution solve(ISearchable domain) {
-        if (null != domain) {
+        if (checkDomain(domain)) {
 
             Solution ans;
 

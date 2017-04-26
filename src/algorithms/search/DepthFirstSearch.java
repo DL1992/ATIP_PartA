@@ -19,25 +19,33 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
      * non-recursive. using a Stack.
      */
     public Solution solve(ISearchable domain) {
-        if (null != domain) {
+        if (checkDomain(domain)) {
             Stack<AState> openStateStack = new Stack<>();
             HashMap<String, AState> visitStateHashMap = new HashMap<>();
             AState startState = domain.getStartState();
+            AState goalState = domain.getGoalState();
             openStateStack.push(startState);
             while (!openStateStack.empty()) {
                 AState currentState = openStateStack.pop();
                 this.evaluatedNodes++;
+//                if (currentState.equals(goalState)) {
+//                    Solution ans = new Solution(createSolution(currentState));
+//                    return ans;
+//                }
                 if (!visitStateHashMap.containsKey(currentState.toString())) {
                     visitStateHashMap.put(currentState.toString(), currentState);
                     ArrayList<AState> successors = domain.getAllPossibleStates(currentState);
                     for (AState state :
                             successors) {
+//
                         state.setCameFrom(currentState);
+//
                         openStateStack.push(state);
                     }
                 }
             }
-            Solution ans = new Solution(createSolution(visitStateHashMap.get(domain.getGoalState().toString())));
+
+            Solution ans = new Solution(createSolution(goalState));
             return ans;
         }
         return null;

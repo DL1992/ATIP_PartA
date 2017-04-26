@@ -2,6 +2,8 @@ package algorithms.search;
 
 import algorithms.mazeGenerators.Position;
 
+import java.util.HashMap;
+
 /**
  * This class  represent a state in a Maze domain.
  * a maze state is a state in maze domain which has a position.
@@ -10,6 +12,7 @@ import algorithms.mazeGenerators.Position;
  * @author Doron Laadan
  */
 public class MazeState extends AState {
+    static HashMap<String, MazeState> mazeStatePool = new HashMap<>();
     private Position position;
 
     /**
@@ -20,7 +23,7 @@ public class MazeState extends AState {
      * @param cost     the cost of getting to this state.
      * @param cameFrom the father state from which this state was discover.
      */
-    public MazeState(Position position, int cost, AState cameFrom) {
+    private MazeState(Position position, int cost, AState cameFrom) {
         super(position.toString(), cost, cameFrom);
         this.position = position;
     }
@@ -55,6 +58,15 @@ public class MazeState extends AState {
      */
     private boolean equals(MazeState other) {
         return this.position.equals(other.position);
+    }
+
+    static MazeState getMazeStateFromPool(String state, int rowIndex, int colIndex, int cost, AState cameFrom) {
+        if (mazeStatePool.containsKey(state)) {
+            return mazeStatePool.get(state);
+        }
+        MazeState newMazeState = new MazeState(Position.getPosition(rowIndex, colIndex), cost, cameFrom);
+        mazeStatePool.put(state, newMazeState);
+        return newMazeState;
     }
 
 }

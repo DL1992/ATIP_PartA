@@ -29,7 +29,8 @@ public class SearchableMaze implements ISearchable {
       return a new MazeState with default params
      */
     public AState getStartState() {
-        return new MazeState(this.maze.getStartPosition(), 0, null);
+        Position startState = this.maze.getStartPosition();
+        return MazeState.getMazeStateFromPool(startState.toString(), startState.getRowIndex(), startState.getColumnIndex(), 0, null);
     }
 
     @Override
@@ -37,7 +38,8 @@ public class SearchableMaze implements ISearchable {
       return a new MazeState with default params
      */
     public AState getGoalState() {
-        return new MazeState(this.maze.getGoalPosition(), 0, null);
+        Position startState = this.maze.getGoalPosition();
+        return MazeState.getMazeStateFromPool(startState.toString(), startState.getRowIndex(), startState.getColumnIndex(), 0, null);
     }
 
     @Override
@@ -85,7 +87,11 @@ public class SearchableMaze implements ISearchable {
         if (rowIndex >= 0 && rowIndex < mazeData.length) {
             if (colIndex >= 0 && colIndex < mazeData[rowIndex].length) {
                 if (mazeData[rowIndex][colIndex] == 0) {
-                    MazeState mazeStateToArrayList = new MazeState(Position.getPosition(rowIndex, colIndex), mazeState.getCost() + 1, mazeState);
+                    MazeState mazeStateToArrayList = MazeState.getMazeStateFromPool(String.format("{%d,%d}", rowIndex, colIndex), rowIndex, colIndex, mazeState.getCost() + 1, mazeState);
+//                    if (mazeState.getCost() + 1 < mazeStateToArrayList.getCost()) {
+//                        mazeStateToArrayList.setCost(mazeState.getCost() + 1);
+//                        mazeStateToArrayList.setCameFrom(mazeState);
+//                    }
                     if (!(mazeStateToArrayList.equals(mazeState.getCameFrom()))) {
                         ansArrayList.add(mazeStateToArrayList);
                     }

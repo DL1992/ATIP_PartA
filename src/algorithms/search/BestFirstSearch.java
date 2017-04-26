@@ -12,7 +12,7 @@ public class BestFirstSearch extends ASearchingAlgorithm {
 
     @Override
     public Solution solve(ISearchable domain) {
-        if (null != domain) {
+        if (checkDomain(domain)) {
             Solution ans;
             AState startState = domain.getStartState();
             AState goalState = domain.getGoalState();
@@ -34,20 +34,14 @@ public class BestFirstSearch extends ASearchingAlgorithm {
                     if (!closed.containsKey(state.toString()) && !open.contains(state)) {
                         state.setCameFrom(currentState);
                         open.add(state);
-                    } else {
-                        AState oldState = startState;
-                        for (int i = 0; i < closed.size(); i++) {
-                            if ((closed.get(i)).equals(state)) {
-                                oldState = closed.get(i);
-                            }
+                    } else if (currentState.getCost() + 1 < state.getCost()) {
+                        state.setCost(currentState.getCost() + 1);
+                        state.setCameFrom(currentState);
+
+                        if (open.contains(state)) {
+                            open.remove(state);
                         }
-                        if (state.getCost() < oldState.getCost()) {
-                            closed.remove(oldState);
-                            if (open.contains(state)) {
-                                open.remove(state);
-                            }
-                            open.add(state);
-                        }
+                        open.add(state);
                     }
                 }
             }
