@@ -12,12 +12,12 @@ import java.util.HashSet;
  * @author Doron Laadan
  */
 public class MyMazeGenerator extends AMazeGenerator {
-//    private Random randomGenerator;
-
-    @Override
     /**
-     * generta a random maze using the prim's algorithm.
+     * generates a random maze using the prim's algorithm.
+     * this is done by starting with a grid full of walls, randomly picking a start position,
+     * and randomly dig out the maze from the already existing one, while avoiding circles
      */
+    @Override
     public Maze generate(int numOfRows, int numOfCols) {
         if (numOfRows > 0 && numOfCols > 0) {
             if (!(numOfRows == 1 && numOfCols == 1)) {
@@ -34,9 +34,12 @@ public class MyMazeGenerator extends AMazeGenerator {
     }
 
     /**
-     * @param maze
-     * @param numOfRows
-     * @param numOfCols
+     * this function executes the prim algorithm for maze generation.
+     * helper function to generate - does the actual generation using the prim algorithm
+     *
+     * @param maze      the Maze we set its start and goal positions.
+     * @param numOfRows the index that contains the number of rows in the maze.
+     * @param numOfCols the index that contains the number of cols in the maze.
      */
     private void usePrim(Maze maze, int numOfRows, int numOfCols) {
 
@@ -65,6 +68,15 @@ public class MyMazeGenerator extends AMazeGenerator {
         maze.setGoalPosition(endPos);
     }
 
+    /**
+     * this function adds a given positions as part of the maze.
+     * helper function for usePrim - used to add a cell as a part of the maze.
+     *
+     * @param maze     the Maze we set its start and goal positions.
+     * @param mazeHM   an HashMap that contains all the positions that are part of the maze.
+     * @param mazeList an arrayList that contains all the positions that are part of the maze.
+     * @param position the position in the maze which we wish to add the neighbors of.
+     */
     private void setPartOfMaze(Maze maze, HashSet<String> mazeHM, ArrayList<Position> mazeList, Position position) {
         int[][] data = maze.getData();
         data[position.getRowIndex()][position.getColumnIndex()] = 0;
@@ -73,6 +85,15 @@ public class MyMazeGenerator extends AMazeGenerator {
         mazeList.add(position);
     }
 
+    /**
+     * this function creates and adds the positions of neighbors of a cell that specified in position.
+     * helper function for usePrim - used to add a cells neighbors to the wallList.
+     *
+     * @param maze     the Maze we set its start and goal positions.
+     * @param mazeHM   an HashMap that contains all the positions that are part of the maze.
+     * @param wallList an arrayList that contains all the positions that are neighboring walls in the maze.
+     * @param position the position in the maze which we wish to add the neighbors of.
+     */
     private void addWallsToList(Maze maze, HashSet<String> mazeHM, ArrayList<Position> wallList, Position position) {
         if (maze.checkIndexes(position.getRowIndex() + 1, position.getColumnIndex()) && !mazeHM.contains(String.format("{%d,%d}", position.getRowIndex() + 1, position.getColumnIndex()))) {
             wallList.add(Position.getPosition(position.getRowIndex() + 1, position.getColumnIndex()));
@@ -88,17 +109,31 @@ public class MyMazeGenerator extends AMazeGenerator {
         }
     }
 
+    /**
+     * this function randomly creates and sets the goal position of the maze.
+     * helper function for usePrim - used to randomly pick and set the goal position.
+     *
+     * @param maze     the Maze we set its start and goal positions.
+     * @param mazeList an arrayList that contains all the positions that are part of the maze.
+     */
     private Position pickEndPos(Maze maze, ArrayList<Position> mazeList) {
         Position startPosition = maze.getStartPosition();
         int index = this.randomGenerator.nextInt(mazeList.size());
-        Position endPosition = mazeList.get(index);
-        while (startPosition.equals(endPosition)) {
+        Position goalPosition = mazeList.get(index);
+        while (startPosition.equals(goalPosition)) {
             index = this.randomGenerator.nextInt(mazeList.size());
-            endPosition = mazeList.get(index);
+            goalPosition = mazeList.get(index);
         }
-        return endPosition;
+        return goalPosition;
     }
 
+    /**
+     * this function counts the amount of neighboring cells that are part of the maze.
+     * helper function for usePrim - used to check if removing a wall will create a circle in the maze.
+     *
+     * @param maze     the Maze we set its start and goal positions.
+     * @param position the position in the maze which we wish to count the neighbors of.
+     */
     private int countNeighbors(Maze maze, Position position) {
         int neighborCounter = 0;
         int[][] data = maze.getData();

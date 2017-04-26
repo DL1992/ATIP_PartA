@@ -12,19 +12,14 @@ import java.util.ArrayList;
  */
 public class RunSearchOnMaze {
     public static void main(String[] args) {
-        long lstartTime = System.currentTimeMillis();
-//        IMazeGenerator mg = new SimpleMazeGenerator();
         IMazeGenerator mg = new MyMazeGenerator();
-        Maze maze = mg.generate(60, 60);
-//        maze.print();
+        Maze maze = mg.generate(30, 30);
+
         SearchableMaze searchableMaze = new SearchableMaze(maze);
 
         solveProblem(searchableMaze, new BreadthFirstSearch());
         solveProblem(searchableMaze, new DepthFirstSearch());
         solveProblem(searchableMaze, new BestFirstSearch());
-        long end = System.currentTimeMillis();
-        long ans = end - lstartTime;
-        System.out.println(String.format("start time: %s. end time: %s. total:%s", lstartTime, end, ans));
     }
 
     private static void solveProblem(ISearchable domain, ISearchingAlgorithm searcher) {

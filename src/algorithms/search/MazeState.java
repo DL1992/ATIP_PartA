@@ -60,6 +60,16 @@ public class MazeState extends AState {
         return this.position.equals(other.position);
     }
 
+    /**
+     * In charge of the mazeState pool. if doesnt exist creates a new state.
+     *
+     * @param state    the key in the pool
+     * @param rowIndex the row index
+     * @param colIndex the col index
+     * @param cost     the cost to get to that state
+     * @param cameFrom the father of thata state
+     * @return the state with the correct key, or a new state.
+     */
     static MazeState getMazeStateFromPool(String state, int rowIndex, int colIndex, int cost, AState cameFrom) {
         if (mazeStatePool.containsKey(state)) {
             return mazeStatePool.get(state);

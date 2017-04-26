@@ -6,18 +6,18 @@ import java.util.Stack;
 
 
 /**
- * This class use the DFS algorithm for to solve a searching problem.
+ * This class use the DFS algorithm to solve a searching problem.
  *
  * @author Vladislav Sergienko
  * @author Doron Laadan
  */
 public class DepthFirstSearch extends ASearchingAlgorithm {
 
-    @Override
     /**
      * the Solution is created by using a normal DFS implementation.
      * non-recursive. using a Stack.
      */
+    @Override
     public Solution solve(ISearchable domain) {
         if (checkDomain(domain)) {
             Stack<AState> openStateStack = new Stack<>();

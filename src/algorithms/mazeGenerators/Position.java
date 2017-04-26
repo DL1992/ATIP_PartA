@@ -16,6 +16,13 @@ public class Position {
     static HashMap<String, Position> posPool = new HashMap<>();
 
 
+    /**
+     * this function is in charge of the position pool.
+     *
+     * @param rowIndex    the rowIndex of the grid.
+     * @param columnIndex the coIndex of the grid.
+     * @return The Poistion of the given indexes.
+     */
     public static Position getPosition(int rowIndex, int columnIndex) {
         if (posPool.containsKey(String.format("{%d,%d}", rowIndex, columnIndex))) {
             return posPool.get(String.format("{%d,%d}", rowIndex, columnIndex));
@@ -33,7 +40,7 @@ public class Position {
     private Position(int rowIndex, int columnIndex) {
         this.rowIndex = rowIndex;
         this.columnIndex = columnIndex;
-        //posPool.put(this.toString(),this);
+        posPool.put(this.toString(), this);
     }
 
     /**
@@ -69,8 +76,6 @@ public class Position {
      * @param other is the Position to compare.
      * @return true if it's the same position, false otherwise.
      */
-
-
     public boolean equals(Position other) {
         if (null != other) {
             return (other.rowIndex == this.rowIndex && other.columnIndex == this.columnIndex);

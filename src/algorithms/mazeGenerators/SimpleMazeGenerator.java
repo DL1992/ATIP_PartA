@@ -9,13 +9,12 @@ package algorithms.mazeGenerators;
  */
 public class SimpleMazeGenerator extends AMazeGenerator {
 
-
-    @Override
     /**
      * generate a completely random maze.
      * this is done by starting with a grid full of walls, randomly deciding a start and goal position,
      * creates a straight path between them and then randomly breaking walls.
      */
+    @Override
     public Maze generate(int numOfRows, int numOfCols) {
         if (numOfRows > 0 && numOfCols > 0) {
             if (!(numOfRows == 1 && numOfCols == 1)) {
