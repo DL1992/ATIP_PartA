@@ -38,9 +38,11 @@ public class UnitTestingBestFirstSearch {
     public void testSolveEmptyMazeShouldReturnNull() throws Exception {
         this.searchableMaze = null;
         assertNull(this.bestFirstSearch.solve(this.searchableMaze));
+        this.searchableMaze = new SearchableMaze(new MyMazeGenerator().generate(-1, 2));
+        assertNull(this.bestFirstSearch.solve(this.searchableMaze));
     }
 
-    @Test(timeout = 700)
+    @Test(timeout = 500)
     public void testSolveTimeOut() throws Exception {
         this.bestFirstSearch.solve(this.searchableMaze);
     }

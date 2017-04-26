@@ -28,25 +28,21 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
             while (!openStateStack.empty()) {
                 AState currentState = openStateStack.pop();
                 this.evaluatedNodes++;
-//                if (currentState.equals(goalState)) {
-//                    Solution ans = new Solution(createSolution(currentState));
-//                    return ans;
-//                }
                 if (!visitStateHashMap.containsKey(currentState.toString())) {
                     visitStateHashMap.put(currentState.toString(), currentState);
                     ArrayList<AState> successors = domain.getAllPossibleStates(currentState);
                     for (AState state :
                             successors) {
-
-                        state.setCameFrom(currentState);
-
+                        if (!visitStateHashMap.containsKey(state.toString())) {
+                            state.setCameFrom(currentState);
+                        }
                         openStateStack.push(state);
                     }
                 }
             }
 
-            Solution ans = new Solution(createSolution(goalState));
-            return ans;
+
+            return new Solution(createSolution(goalState));
         }
         return null;
     }

@@ -29,8 +29,11 @@ public class SearchableMaze implements ISearchable {
       return a new MazeState with default params
      */
     public AState getStartState() {
-        Position startState = this.maze.getStartPosition();
-        return MazeState.getMazeStateFromPool(startState.toString(), startState.getRowIndex(), startState.getColumnIndex(), 0, null);
+        if (null != this.maze) {
+            Position startState = this.maze.getStartPosition();
+            return MazeState.getMazeStateFromPool(startState.toString(), startState.getRowIndex(), startState.getColumnIndex(), 0, null);
+        }
+        return null;
     }
 
     @Override
@@ -38,8 +41,11 @@ public class SearchableMaze implements ISearchable {
       return a new MazeState with default params
      */
     public AState getGoalState() {
-        Position startState = this.maze.getGoalPosition();
-        return MazeState.getMazeStateFromPool(startState.toString(), startState.getRowIndex(), startState.getColumnIndex(), 0, null);
+        if (null != this.maze) {
+            Position startState = this.maze.getGoalPosition();
+            return MazeState.getMazeStateFromPool(startState.toString(), startState.getRowIndex(), startState.getColumnIndex(), Integer.MAX_VALUE, null);
+        }
+        return null;
     }
 
     @Override
@@ -88,10 +94,10 @@ public class SearchableMaze implements ISearchable {
             if (colIndex >= 0 && colIndex < mazeData[rowIndex].length) {
                 if (mazeData[rowIndex][colIndex] == 0) {
                     MazeState mazeStateToArrayList = MazeState.getMazeStateFromPool(String.format("{%d,%d}", rowIndex, colIndex), rowIndex, colIndex, mazeState.getCost() + 1, mazeState);
-//                    if (mazeState.getCost() + 1 < mazeStateToArrayList.getCost()) {
-//                        mazeStateToArrayList.setCost(mazeState.getCost() + 1);
-//                        mazeStateToArrayList.setCameFrom(mazeState);
-//                    }
+                    if (mazeState.getCost() + 1 < mazeStateToArrayList.getCost()) {
+                        mazeStateToArrayList.setCost(mazeState.getCost() + 1);
+                        mazeStateToArrayList.setCameFrom(mazeState);
+                    }
                     if (!(mazeStateToArrayList.equals(mazeState.getCameFrom()))) {
                         ansArrayList.add(mazeStateToArrayList);
                     }

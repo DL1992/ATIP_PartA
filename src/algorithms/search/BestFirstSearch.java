@@ -17,7 +17,6 @@ public class BestFirstSearch extends ASearchingAlgorithm {
             AState startState = domain.getStartState();
             AState goalState = domain.getGoalState();
             PriorityQueue<AState> open = new PriorityQueue<>();
-            //ArrayList<AState> closed = new ArrayList<>();
             HashMap<String, AState> closed = new HashMap<>();
             open.add(startState);
             while (!open.isEmpty()) {
@@ -34,10 +33,7 @@ public class BestFirstSearch extends ASearchingAlgorithm {
                     if (!closed.containsKey(state.toString()) && !open.contains(state)) {
                         state.setCameFrom(currentState);
                         open.add(state);
-                    } else if (currentState.getCost() + 1 < state.getCost()) {
-                        state.setCost(currentState.getCost() + 1);
-                        state.setCameFrom(currentState);
-
+                    } else if (currentState.equals(state.getCameFrom())) {
                         if (open.contains(state)) {
                             open.remove(state);
                         }
