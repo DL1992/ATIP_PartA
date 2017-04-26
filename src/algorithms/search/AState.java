@@ -1,5 +1,7 @@
 package algorithms.search;
 
+import java.util.HashMap;
+
 /**
  * This class is abstract class which represent a state in searchable problem.
  *

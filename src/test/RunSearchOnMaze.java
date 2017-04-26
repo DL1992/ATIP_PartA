@@ -15,7 +15,7 @@ public class RunSearchOnMaze {
         long lstartTime = System.currentTimeMillis();
 //        IMazeGenerator mg = new SimpleMazeGenerator();
         IMazeGenerator mg = new MyMazeGenerator();
-        Maze maze = mg.generate(3, 3);
+        Maze maze = mg.generate(1000, 1000);
         maze.print();
         SearchableMaze searchableMaze = new SearchableMaze(maze);
 

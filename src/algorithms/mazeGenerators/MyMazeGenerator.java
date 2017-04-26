@@ -1,6 +1,8 @@
 package algorithms.mazeGenerators;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 //TODO: javadoc of class here. trying to figure out a change for it to run faster!
 
 /**
@@ -38,21 +40,26 @@ public class MyMazeGenerator extends AMazeGenerator {
      * @param numOfCols
      */
     private void usePrim(Maze maze, int numOfRows, int numOfCols) {
+
+        HashSet<String> mazeHS = new HashSet<>();
+//        HashMap<String, Position> mazeHM = new HashMap<>();
+        //HashMap<String, Position> wallHM = new HashMap<>();
         ArrayList<Position> wallList = new ArrayList<>();
         ArrayList<Position> mazeList = new ArrayList<>();
+
         Position startPos = createPosition(numOfRows, numOfCols);
         maze.setStartPosition(startPos);
 
-        setPartOfMaze(mazeList, maze, startPos);
-        addWallsToList(maze, wallList, mazeList, startPos);
+        setPartOfMaze(maze, mazeHS, mazeList, startPos);
+        addWallsToList(maze, mazeHS, wallList, startPos);
 
         int index; // saves a index of the random pick wall
         while (!wallList.isEmpty()) {
             index = this.randomGenerator.nextInt(wallList.size());
             Position randomWall = wallList.get(index);
             if (countNeighbors(maze, randomWall) == 1) {
-                setPartOfMaze(mazeList, maze, randomWall);
-                addWallsToList(maze, wallList, mazeList, randomWall);
+                setPartOfMaze(maze, mazeHS, mazeList, randomWall);
+                addWallsToList(maze, mazeHS, wallList, randomWall);
             }
             wallList.remove(index);
         }
@@ -61,29 +68,26 @@ public class MyMazeGenerator extends AMazeGenerator {
         maze.setGoalPosition(endPos);
     }
 
-    private void setPartOfMaze(ArrayList<Position> mazeList, Maze maze, Position position) {
+    private void setPartOfMaze(Maze maze, HashSet<String> mazeHM, ArrayList<Position> mazeList, Position position) {
         int[][] data = maze.getData();
         data[position.getRowIndex()][position.getColumnIndex()] = 0;
         maze.setData(data);
+        mazeHM.add(position.toString());
         mazeList.add(position);
     }
 
-    private void addWallsToList(Maze maze, ArrayList<Position> wallList, ArrayList<Position> mazeList, Position position) {
-        Position up = new Position(position.getRowIndex() + 1, position.getColumnIndex());
-        Position down = new Position(position.getRowIndex() - 1, position.getColumnIndex());
-        Position left = new Position(position.getRowIndex(), position.getColumnIndex() - 1);
-        Position right = new Position(position.getRowIndex(), position.getColumnIndex() + 1);
-        if (maze.checkPosition(up) && !mazeList.contains(up)) {
-            wallList.add(up);
+    private void addWallsToList(Maze maze, HashSet<String> mazeHM, ArrayList<Position> wallList, Position position) {
+        if (maze.checkIndexes(position.getRowIndex() + 1, position.getColumnIndex()) && !mazeHM.contains( String.format("{%d,%d}", position.getRowIndex() + 1, position.getColumnIndex()) )) {
+            wallList.add(Position.getPosition(position.getRowIndex() + 1, position.getColumnIndex()));
         }
-        if (maze.checkPosition(down) && !mazeList.contains(down)) {
-            wallList.add(down);
+        if (maze.checkIndexes(position.getRowIndex() - 1, position.getColumnIndex()) && !mazeHM.contains(String.format("{%d,%d}", position.getRowIndex() - 1, position.getColumnIndex()))) {
+            wallList.add(Position.getPosition(position.getRowIndex() - 1, position.getColumnIndex()));
         }
-        if (maze.checkPosition(left) && !mazeList.contains(left)) {
-            wallList.add(left);
+        if (maze.checkIndexes(position.getRowIndex(), position.getColumnIndex() - 1) && !mazeHM.contains(String.format("{%d,%d}", position.getRowIndex(), position.getColumnIndex() - 1 ))) {
+            wallList.add(Position.getPosition(position.getRowIndex(), position.getColumnIndex() - 1));
         }
-        if (maze.checkPosition(right) && !mazeList.contains(right)) {
-            wallList.add(right);
+        if (maze.checkIndexes(position.getRowIndex(), position.getColumnIndex() + 1) && !mazeHM.contains(String.format("{%d,%d}", position.getRowIndex(), position.getColumnIndex() + 1 ))) {
+            wallList.add(Position.getPosition(position.getRowIndex(), position.getColumnIndex() + 1));
         }
     }
 
@@ -102,28 +106,23 @@ public class MyMazeGenerator extends AMazeGenerator {
         int neighborCounter = 0;
         int[][] data = maze.getData();
 
-        Position up = new Position(position.getRowIndex() + 1, position.getColumnIndex());
-        Position down = new Position(position.getRowIndex() - 1, position.getColumnIndex());
-        Position left = new Position(position.getRowIndex(), position.getColumnIndex() - 1);
-        Position right = new Position(position.getRowIndex(), position.getColumnIndex() + 1);
-
-        if (maze.checkPosition(up)) {
-            if (data[up.getRowIndex()][up.getColumnIndex()] == 0) {
+        if (maze.checkIndexes(position.getRowIndex() + 1, position.getColumnIndex())) {
+            if (data[position.getRowIndex() + 1][position.getColumnIndex()] == 0) {
                 neighborCounter++;
             }
         }
-        if (maze.checkPosition(down)) {
-            if (data[down.getRowIndex()][down.getColumnIndex()] == 0) {
+        if (maze.checkIndexes(position.getRowIndex() - 1, position.getColumnIndex())) {
+            if (data[position.getRowIndex() - 1][position.getColumnIndex()] == 0) {
                 neighborCounter++;
             }
         }
-        if (maze.checkPosition(left)) {
-            if (data[left.getRowIndex()][left.getColumnIndex()] == 0) {
+        if (maze.checkIndexes(position.getRowIndex(), position.getColumnIndex() - 1)) {
+            if (data[position.getRowIndex()][position.getColumnIndex() - 1] == 0) {
                 neighborCounter++;
             }
         }
-        if (maze.checkPosition(right)) {
-            if (data[right.getRowIndex()][right.getColumnIndex()] == 0) {
+        if (maze.checkIndexes(position.getRowIndex(), position.getColumnIndex() + 1)) {
+            if (data[position.getRowIndex()][position.getColumnIndex() + 1] == 0) {
                 neighborCounter++;
             }
         }

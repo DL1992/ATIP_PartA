@@ -139,6 +139,17 @@ public class Maze {
         return false;
     }
 
+    public boolean checkIndexes(int i, int j) {
+        if (this.data != null) {
+            if (i < this.data.length && i >= 0) {
+                if (j >= 0 && j < this.data[i].length) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /**
      * checks if a specific coordinates equals a specific Position
      * helper function for print cell

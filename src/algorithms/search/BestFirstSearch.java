@@ -1,6 +1,7 @@
 package algorithms.search;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.PriorityQueue;
 //TODO: write javadoc, change to hashMap
 
@@ -16,12 +17,13 @@ public class BestFirstSearch extends ASearchingAlgorithm {
             AState startState = domain.getStartState();
             AState goalState = domain.getGoalState();
             PriorityQueue<AState> open = new PriorityQueue<>();
-            ArrayList<AState> closed = new ArrayList<>();
+            //ArrayList<AState> closed = new ArrayList<>();
+            HashMap<String, AState> closed = new HashMap<>();
             open.add(startState);
             while (!open.isEmpty()) {
                 this.evaluatedNodes++;
                 AState currentState = open.poll();
-                closed.add(currentState);
+                closed.put(currentState.toString(), currentState);
                 if (currentState.equals(goalState)) {
                     ans = new Solution(createSolution(currentState));
                     return ans;
@@ -29,7 +31,7 @@ public class BestFirstSearch extends ASearchingAlgorithm {
                 ArrayList<AState> successors = domain.getAllPossibleStates(currentState);
                 for (AState state :
                         successors) {
-                    if (!closed.contains(state) && !open.contains(state)) {
+                    if (!closed.containsKey(state.toString()) && !open.contains(state)) {
                         state.setCameFrom(currentState);
                         open.add(state);
                     } else {

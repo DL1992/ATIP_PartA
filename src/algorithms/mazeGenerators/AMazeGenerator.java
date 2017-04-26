@@ -49,6 +49,6 @@ public abstract class AMazeGenerator implements IMazeGenerator {
     protected Position createPosition(int numOfRows, int numOfCols) {
         int positionRowIndex = this.randomGenerator.nextInt(numOfRows);
         int positionColIndex = this.randomGenerator.nextInt(numOfCols);
-        return new Position(positionRowIndex, positionColIndex);
+        return Position.getPosition(positionRowIndex, positionColIndex);
     }
 }

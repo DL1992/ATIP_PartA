@@ -85,7 +85,7 @@ public class SearchableMaze implements ISearchable {
         if (rowIndex >= 0 && rowIndex < mazeData.length) {
             if (colIndex >= 0 && colIndex < mazeData[rowIndex].length) {
                 if (mazeData[rowIndex][colIndex] == 0) {
-                    MazeState mazeStateToArrayList = new MazeState(new Position(rowIndex, colIndex), mazeState.getCost() + 1, mazeState);
+                    MazeState mazeStateToArrayList = new MazeState(Position.getPosition(rowIndex, colIndex), mazeState.getCost() + 1, mazeState);
                     if (!(mazeStateToArrayList.equals(mazeState.getCameFrom()))) {
                         ansArrayList.add(mazeStateToArrayList);
                     }

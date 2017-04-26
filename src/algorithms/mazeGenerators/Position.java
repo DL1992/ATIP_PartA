@@ -1,8 +1,11 @@
 package algorithms.mazeGenerators;
 
+import java.util.HashMap;
+
 /**
  * This class represent a Position.
  * a Position is a pair of row and col in a grid.
+ * it has a in-built objectPool to boost large creations
  *
  * @author Vladislav Sergienko
  * @author Doron Laadan
@@ -10,6 +13,17 @@ package algorithms.mazeGenerators;
 public class Position {
     private int rowIndex;
     private int columnIndex;
+    static HashMap<String, Position> posPool = new HashMap<>();
+
+
+    public static Position getPosition(int rowIndex, int columnIndex){
+        if( posPool.containsKey(String.format("{%d,%d}", rowIndex, columnIndex)) ){
+            return posPool.get(String.format("{%d,%d}", rowIndex, columnIndex));
+        }
+        else{
+            return new Position(rowIndex, columnIndex);
+        }
+    }
 
     /**
      * constructor for Position
@@ -17,9 +31,10 @@ public class Position {
      * @param rowIndex    the rowIndex of the grid.
      * @param columnIndex the coIndex of the grid.
      */
-    public Position(int rowIndex, int columnIndex) {
+    private Position(int rowIndex, int columnIndex) {
         this.rowIndex = rowIndex;
         this.columnIndex = columnIndex;
+        posPool.put(this.toString(),this);
     }
 
     /**
