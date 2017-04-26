@@ -37,9 +37,9 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
                     ArrayList<AState> successors = domain.getAllPossibleStates(currentState);
                     for (AState state :
                             successors) {
-//
+
                         state.setCameFrom(currentState);
-//
+
                         openStateStack.push(state);
                     }
                 }
