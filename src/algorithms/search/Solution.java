@@ -2,6 +2,7 @@ package algorithms.search;
 
 import java.util.ArrayList;
 
+
 /**
  * This class represent a Solution to a searching problem.
  * a Solution is the path of state from start to goal in the problem.

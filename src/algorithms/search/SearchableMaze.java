@@ -4,6 +4,7 @@ import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * This class is an object adapter class.
@@ -14,6 +15,7 @@ import java.util.ArrayList;
  */
 public class SearchableMaze implements ISearchable {
     private Maze maze;
+    private HashMap<String, MazeState> mazeStatePool;
 
     /**
      * constructor for the SearchableMaze.
@@ -22,6 +24,7 @@ public class SearchableMaze implements ISearchable {
      */
     public SearchableMaze(Maze maze) {
         this.maze = maze;
+        this.mazeStatePool = new HashMap<>();
     }
 
     @Override
@@ -31,7 +34,7 @@ public class SearchableMaze implements ISearchable {
     public AState getStartState() {
         if (null != this.maze) {
             Position startState = this.maze.getStartPosition();
-            return MazeState.getMazeStateFromPool(startState.toString(), startState.getRowIndex(), startState.getColumnIndex(), 0, null);
+            return getMazeStateFromPool(startState.toString(), startState.getRowIndex(), startState.getColumnIndex(), 0, null);
         }
         return null;
     }
@@ -43,7 +46,7 @@ public class SearchableMaze implements ISearchable {
     public AState getGoalState() {
         if (null != this.maze) {
             Position startState = this.maze.getGoalPosition();
-            return MazeState.getMazeStateFromPool(startState.toString(), startState.getRowIndex(), startState.getColumnIndex(), Integer.MAX_VALUE, null);
+            return getMazeStateFromPool(startState.toString(), startState.getRowIndex(), startState.getColumnIndex(), Integer.MAX_VALUE, null);
         }
         return null;
     }
@@ -93,7 +96,7 @@ public class SearchableMaze implements ISearchable {
         if (rowIndex >= 0 && rowIndex < mazeData.length) {
             if (colIndex >= 0 && colIndex < mazeData[rowIndex].length) {
                 if (mazeData[rowIndex][colIndex] == 0) {
-                    MazeState mazeStateToArrayList = MazeState.getMazeStateFromPool(String.format("{%d,%d}", rowIndex, colIndex), rowIndex, colIndex, mazeState.getCost() + 1, mazeState);
+                    MazeState mazeStateToArrayList = getMazeStateFromPool(String.format("{%d,%d}", rowIndex, colIndex), rowIndex, colIndex, mazeState.getCost() + 1, mazeState);
                     if (mazeState.getCost() + 1 < mazeStateToArrayList.getCost()) {
                         mazeStateToArrayList.setCost(mazeState.getCost() + 1);
                         mazeStateToArrayList.setCameFrom(mazeState);
@@ -104,5 +107,24 @@ public class SearchableMaze implements ISearchable {
                 }
             }
         }
+    }
+
+    /**
+     * In charge of the mazeState pool. if doesnt exist creates a new state.
+     *
+     * @param state    the key in the pool
+     * @param rowIndex the row index
+     * @param colIndex the col index
+     * @param cost     the cost to get to that state
+     * @param cameFrom the father of thata state
+     * @return the state with the correct key, or a new state.
+     */
+    private MazeState getMazeStateFromPool(String state, int rowIndex, int colIndex, int cost, AState cameFrom) {
+        if (this.mazeStatePool.containsKey(state)) {
+            return this.mazeStatePool.get(state);
+        }
+        MazeState newMazeState = new MazeState(Position.getPosition(rowIndex, colIndex), cost, cameFrom);
+        this.mazeStatePool.put(state, newMazeState);
+        return newMazeState;
     }
 }

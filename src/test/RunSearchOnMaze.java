@@ -13,13 +13,15 @@ import java.util.ArrayList;
 public class RunSearchOnMaze {
     public static void main(String[] args) {
         IMazeGenerator mg = new MyMazeGenerator();
-        Maze maze = mg.generate(30, 30);
+        for (int i = 1; i < 100; i++) {
+            Maze maze = mg.generate(i * 10, i * 10);
+            maze.print();
+            SearchableMaze searchableMaze = new SearchableMaze(maze);
 
-        SearchableMaze searchableMaze = new SearchableMaze(maze);
-
-        solveProblem(searchableMaze, new BreadthFirstSearch());
-        solveProblem(searchableMaze, new DepthFirstSearch());
-        solveProblem(searchableMaze, new BestFirstSearch());
+            solveProblem(searchableMaze, new BreadthFirstSearch());
+            solveProblem(searchableMaze, new DepthFirstSearch());
+            solveProblem(searchableMaze, new BestFirstSearch());
+        }
     }
 
     private static void solveProblem(ISearchable domain, ISearchingAlgorithm searcher) {
