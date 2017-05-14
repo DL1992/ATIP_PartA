@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class RunSearchOnMaze {
     public static void main(String[] args) {
         IMazeGenerator mg = new MyMazeGenerator();
-        for (int i = 1; i < 100; i++) {
+        for (int i = 1; i < 2; i++) {
             Maze maze = mg.generate(i * 10, i * 10);
             maze.print();
             SearchableMaze searchableMaze = new SearchableMaze(maze);

@@ -1,5 +1,8 @@
 package algorithms.mazeGenerators;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * This class represent a Maze.
  * a maze is a grid of integer in which 1 is a wall and 0 is a path.
@@ -161,6 +164,138 @@ public class Maze {
      */
     private boolean isPos(int rowIndex, int colIndex, Position position) {
         return ((rowIndex == position.getRowIndex()) && (colIndex == position.getColumnIndex()));
+    }
+
+
+    /**
+     * return the serializable form of the maze (as a byte array)
+     * the first 30 slots would be in order (5 slot for each) : the row of the starting point, the col of the starting position
+     * the row of the goal position, the col of the goal position, the number of rows in the maze, the number of cols in the maze
+     * then we keep the data of the maze like this: each slot will keep how many consecutive 0 or 1 are there, starting with 0.
+     *
+     * @return byte form of the maze.
+     */
+    public byte[] toByteArray() {
+        List<Byte> byteList = new LinkedList<>();
+        addPositionsToList(byteList);
+        addDataToList(byteList);
+        return listToByteArray(byteList);
+
+    }
+
+    /**
+     * add the size of the maze to list in its byte form.
+     * helper function for toByteArray.
+     *
+     * @param byteList is the list that represents the byteArray.
+     */
+    private void addDataToList(List<Byte> byteList) {
+        intToList(this.data.length, byteList); //add the number of rows to the list
+        intToList(this.data[0].length, byteList);// add the number of cols to the list
+        dataToList(byteList);
+    }
+
+    /**
+     * transform the data of the maze to its byte form and add it to the list.
+     * for simplicity first transform the 2d array into a 1d array.
+     * helper fucntion for addDataToList.
+     *
+     * @param byteList is the list that represents the byteArray.
+     */
+    private void dataToList(List<Byte> byteList) {
+        int[] tempArray = createArray(this.data);
+        byte oneCount = 0;
+        byte zeroCount = 0;
+        int i = 0;
+        while (i < tempArray.length) {
+            while (i < tempArray.length && tempArray[i] == 0 && zeroCount < 127) {
+                zeroCount++;
+                i++;
+            }
+            byteList.add(zeroCount);
+            zeroCount = 0;
+            while (i < tempArray.length && tempArray[i] == 1 && oneCount < 127) {
+                oneCount++;
+                i++;
+            }
+            byteList.add(oneCount);
+            oneCount = 0;
+        }
+
+    }
+
+    /**
+     * transform a 2d array to a 1d array.
+     *
+     * @param data the 2d array.
+     * @return 1d array representation of the 2d array.
+     */
+    private int[] createArray(int[][] data) {
+        int[] ans = new int[data.length * data[0].length];
+        int index = 0;
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j < data[i].length; j++) {
+                ans[index] = data[i][j];
+                index++;
+            }
+        }
+        return ans;
+    }
+
+    /**
+     * adds the start position and the goal position in their byte form(5 byte for each)
+     * to the list that will turn into the byteArray.
+     * helper function for toByteArray.
+     *
+     * @param byteList is the list that represents the byteArray.
+     */
+    private void addPositionsToList(List<Byte> byteList) {
+        addPositionToList(this.startPosition, byteList);
+        addPositionToList(this.goalPosition, byteList);
+    }
+
+    /**
+     * adds a specific position to the byteList.
+     * helper function for addPositionsToList.
+     *
+     * @param position the position we want to add to the list.
+     * @param byteList the list that represents the byteArray.
+     */
+    private void addPositionToList(Position position, List<Byte> byteList) {
+        intToList(position.getRowIndex(), byteList);
+        intToList(position.getColumnIndex(), byteList);
+    }
+
+    /**
+     * transform a int to a specific byte form.
+     * we seperate the int into 5 groups.
+     * for example number 202 would become 2,2,0,0,0.
+     * helper function for addPositionToList and addDataToList.
+     *
+     * @param numToByte the int we want to translate to our byte form.
+     * @param byteList  the list that represents the byteArray.
+     */
+    private void intToList(int numToByte, List<Byte> byteList) {
+        for (int i = 0; i < 5; i++) {
+            byteList.add((byte) (numToByte % 100));
+            numToByte = numToByte / 100;
+        }
+    }
+
+    /**
+     * transform a list of byte into a byte array.
+     * helper function for toByteArray.
+     *
+     * @param byteList the list that we transform into array
+     * @return the array presentation of the list.
+     */
+    private byte[] listToByteArray(List<Byte> byteList) {
+        byte[] returnArray = new byte[byteList.size()];
+        int i = 0;
+        for (Byte b : byteList) {
+            returnArray[i++] = b.byteValue();
+        }
+        return returnArray;
     }
 }
 
