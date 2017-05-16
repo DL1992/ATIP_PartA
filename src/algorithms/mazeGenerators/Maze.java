@@ -14,6 +14,23 @@ import java.util.List;
 public class Maze {
 
     /**
+     * empty constructor for Maze.
+     *
+     */
+    public Maze(){}
+
+    /**
+     * constructor for Maze.
+     * decompresses a byte array into a maze using our secret decompression method.
+     *
+     * @param ByteArray is the byte array we decompress information from.
+     */
+    public Maze(byte[] ByteArray){
+        setPositionsFromByteArray(ByteArray);
+        setDataFromByteArray(ByteArray);
+    }
+
+    /**
      * the starting Position of the maze. should never be null or outside the grid.
      */
     private Position startPosition;
@@ -296,6 +313,85 @@ public class Maze {
             returnArray[i++] = b.byteValue();
         }
         return returnArray;
+    }
+
+    /**
+     * sets the start and goal positions of this maze as
+     * specified in the byte array given (using our secret decompression method).
+     *
+     * @param byteArray the byte array that we decompress for the required information.
+     */
+    private void setPositionsFromByteArray(byte[] byteArray) {
+        this.startPosition = Position.getPosition(getIntFromByteArray(0, byteArray), getIntFromByteArray(5, byteArray));
+        this.goalPosition = Position.getPosition(getIntFromByteArray(10, byteArray), getIntFromByteArray(15, byteArray));
+    }
+
+    /**
+     * sets the data of this maze as specified in the byte array given.
+     * (using our secret decompression method).
+     *
+     * @param byteArray the byte array that we decompress for the required information.
+     */
+    private void setDataFromByteArray(byte[] byteArray) {
+        int rowIndex = getIntFromByteArray(20, byteArray);
+        int colIndex = getIntFromByteArray(25, byteArray);
+        int dataLength = rowIndex*colIndex;
+        int[] data1D = new int[dataLength];
+        data = new int[rowIndex][colIndex];
+        setData1dFromByteArray(data1D, byteArray);
+        setDataFrom1D(data1D);
+    }
+
+    /**
+     *  sets the data1D array with the decompressed information from the byte array given.
+     * (using our secret decompression method).
+     *
+     * @param data1D is the array we save the for decompressed information in.
+     * @param byteArray is the byte array that we decompress for the required information.
+     */
+    private void setData1dFromByteArray(int[] data1D, byte[] byteArray) {
+        int arrayIndex = 0;
+        for(int i=30; i<byteArray.length; i++){
+            for(int j=0; j<byteArray[i]; j++) {
+                if (i % 2 == 0) {
+                    data1D[arrayIndex] = 0;
+                } else {
+                    data1D[arrayIndex] = 1;
+                }
+                arrayIndex++;
+            }
+        }
+    }
+
+    /**
+     * sets the data of this maze as the the data from the 1D array given.
+     *
+     * @param data1D is the array that we get the required information from.
+     */
+    private void setDataFrom1D(int[] data1D) {
+        int arrayIndex = 0;
+        for(int i=0; i<data[0].length; i++){
+            for(int j=0; j<data.length; j++){
+                data[i][j] = data1D[arrayIndex];
+                arrayIndex++;
+            }
+        }
+    }
+
+    /**
+     *  gets an integer from the compressed byte array
+     * (using our secret decompression method).
+     *
+     * @param startLocation is the start location in the byte array of the required int.
+     * @param byteArray is the byte array we  decompressed information from.
+     * @return the required int.
+     */
+    private int getIntFromByteArray(int startLocation, byte[] byteArray) {
+        int theInt=0;
+        for(int i=0; i<5; i++){
+            theInt = theInt + (int) (byteArray[startLocation + i]*Math.pow(100,i));
+        }
+        return theInt;
     }
 }
 

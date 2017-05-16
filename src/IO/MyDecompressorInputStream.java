@@ -2,7 +2,6 @@ package IO;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 /**
  * This class represent a DecompressorOutputStream.
@@ -29,26 +28,30 @@ public class MyDecompressorInputStream extends InputStream {
     }
 
     @Override
-    public int read(byte[] b) throws IOException {
+    /**
+     * fills the byteArray with decompressed data from out InoutStream
+     * using our pre-agreed decompression technique
+     *
+     * @param byteArray is the byte array we are filling.
+     */
+    public int read(byte[] byteArray) throws IOException {
         int arrayIndex = 0;
-
-        for(int i=0; i< b.length; i++){
-            int nextByte = read();
-            i++;
+        int nextByte = read();
+        while (nextByte != -1)
+        {
             int byteNumber = read();
-
-
-            for(int j=0; j<byteNumber; j++){
-                b[arrayIndex] = (byte) nextByte;
-                arrayIndex++;
-                if(arrayIndex == b.length) {
-
-                    return i;
-                }
+            if(byteNumber == -1){
+                return arrayIndex;
             }
-
+            for(int j=0; j<byteNumber; j++){
+                byteArray[arrayIndex] = (byte) nextByte;
+                arrayIndex++;
+            }
+            nextByte = read();
+            if(nextByte == -1){
+                return arrayIndex;
+            }
         }
-
-        return 0;
+        return arrayIndex;
     }
 }
