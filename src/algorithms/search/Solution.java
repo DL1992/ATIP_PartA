@@ -28,4 +28,10 @@ public class Solution {
     public ArrayList<AState> getSolutionPath() {
         return this.solutionPath;
     }
+
+    //TODO: change here.
+    @Override
+    public String toString() {
+        return "yay";
+    }
 }

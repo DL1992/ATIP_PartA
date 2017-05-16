@@ -1,7 +1,11 @@
 package Server;
 
-import java.io .IOException;
+import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
+
+
+//TODO: Check connection ot server (must be on/off). creating thread pool. dealing with server termination.
 
 /**
  * This class is an object adapter class.
@@ -14,6 +18,7 @@ public class Server {
     private int port;
     private int listeningInterval;
     private IServerStrategy serverStrategy;
+    private volatile boolean stop;
 
     public Server(int port, int listeningInterval, IServerStrategy serverStrategy) {
         this.port = port;
@@ -22,22 +27,39 @@ public class Server {
     }
 
     public void start() {
-        new Thread(() -> {
-            runServer();
-        }).start();
+        new Thread(() -> runServer()).start();
     }
 
     private void runServer() {
         try {
             ServerSocket server = new ServerSocket(this.port);
             server.setSoTimeout(this.listeningInterval);
+            while (!this.stop) {
+                Socket client = server.accept();
+                new Thread(() -> handleClient(client)).start();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleClient(Socket client) {
+        try {
+            System.out.println("Client excepted! yay!");
+            System.out.println(String.format("Handling client with socket: %s", client.toString()));
+            this.serverStrategy.serverStrategy(client.getInputStream(), client.getOutputStream());
+            client.getInputStream().close();
+            client.getOutputStream().close();
+            client.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void stop() {
-
+        System.out.println("the server has crashed :/ (just kidding it's stopped");
+        this.stop = true;
     }
 }
 

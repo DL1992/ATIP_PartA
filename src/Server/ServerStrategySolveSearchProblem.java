@@ -1,9 +1,14 @@
 package Server;
 
 import algorithms.mazeGenerators.Maze;
-import algorithms.search.*;
+import algorithms.search.BestFirstSearch;
+import algorithms.search.ISearchingAlgorithm;
+import algorithms.search.SearchableMaze;
+import algorithms.search.Solution;
 
 import java.io.*;
+
+//TODO: saving the solution to file with a unique proper file name.
 
 /**
  * This class is an object adapter class.
@@ -18,7 +23,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
         try {
             ObjectInputStream fromClient = new ObjectInputStream(inFromClient);
             ObjectOutputStream toClient = new ObjectOutputStream(outToClient);
-            ObjectOutputStream toFile = new ObjectOutputStream( new FileOutputStream("a") );
+            ObjectOutputStream toFile = new ObjectOutputStream(new FileOutputStream("a"));
 
             Maze theMaze = (Maze) fromClient.readObject();
             toClient.flush();
@@ -30,7 +35,6 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
             Solution theMazeSolution = searchingAlgorithm.solve(searchableMaze);
             toFile.writeObject(theMazeSolution);
             toClient.writeObject(theMazeSolution);
-
 
 
         } catch (Exception e) {
