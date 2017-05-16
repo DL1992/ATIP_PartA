@@ -18,7 +18,7 @@ public class Client {
         this.clientStrategy = clientStrategy;
     }
 
-    public void start() {
+    public void communicateWithServer() {
         try {
             Socket theServer = new Socket(this.IP, this.port);
             System.out.println("connected to server");

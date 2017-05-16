@@ -1,10 +1,14 @@
 package Server;
 
-import java.io.IOException;
+import java.io .IOException;
 import java.net.ServerSocket;
 
 /**
- * Created by user on 16/05/2017.
+ * This class is an object adapter class.
+ * serachble maze is a searching problem of the maze domain.
+ *
+ * @author Vladislav Sergienko
+ * @author Doron Laadan
  */
 public class Server {
     private int port;
