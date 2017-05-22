@@ -1,5 +1,6 @@
 package algorithms.search;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -8,10 +9,13 @@ import java.util.HashMap;
  * @author Vladislav Sergienko
  * @author Doron Laadan
  */
-public abstract class AState implements Comparable<AState> {
+public abstract class AState implements Comparable<AState>,Serializable {
     protected String state;
     protected int cost;
     protected AState cameFrom;
+
+    public AState(){}
+
 
     /**
      * constructor for the Astate.
@@ -24,6 +28,14 @@ public abstract class AState implements Comparable<AState> {
         this.state = state;
         this.cost = cost;
         this.cameFrom = cameFrom;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     /**

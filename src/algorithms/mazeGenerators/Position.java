@@ -1,5 +1,6 @@
 package algorithms.mazeGenerators;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -10,10 +11,13 @@ import java.util.HashMap;
  * @author Vladislav Sergienko
  * @author Doron Laadan
  */
-public class Position {
+public class Position implements Serializable {
     private int rowIndex;
     private int columnIndex;
     static HashMap<String, Position> posPool = new HashMap<>();
+
+
+    public Position(){}
 
 
     /**
@@ -56,6 +60,9 @@ public class Position {
     public int getColumnIndex() {
         return this.columnIndex;
     }
+
+    public void setRowIndex( int rowIndex ) { this.rowIndex= rowIndex; }
+    public void setColumnIndex( int columnIndex ) { this.columnIndex = columnIndex; }
 
     @Override
     /**

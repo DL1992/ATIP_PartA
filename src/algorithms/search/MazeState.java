@@ -2,6 +2,8 @@ package algorithms.search;
 
 import algorithms.mazeGenerators.Position;
 
+import java.io.Serializable;
+
 /**
  * This class  represent a state in a Maze domain.
  * a maze state is a state in maze domain which has a position.
@@ -9,8 +11,9 @@ import algorithms.mazeGenerators.Position;
  * @author Vladislav Sergienko
  * @author Doron Laadan
  */
-public class MazeState extends AState {
+public class MazeState extends AState implements Serializable {
     private Position position;
+    public MazeState(){}
 
     /**
      * constructor for the MazeState.
@@ -31,7 +34,7 @@ public class MazeState extends AState {
     public Position getPosition() {
         return this.position;
     }
-
+    public void setPosition(Position pos){this.position = pos;}
     @Override
     public boolean equals(AState other) {
         if (other != null) {

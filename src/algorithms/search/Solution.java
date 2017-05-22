@@ -1,5 +1,6 @@
 package algorithms.search;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -10,8 +11,11 @@ import java.util.ArrayList;
  * @author Vladislav Sergienko
  * @author Doron Laadan
  */
-public class Solution {
+public class Solution implements Serializable {
     ArrayList<AState> solutionPath;
+
+    public Solution(){}
+    public void setSolutionPath( ArrayList<AState> solutionPath){ this.solutionPath=solutionPath; }
 
     /**
      * constructor for the solution.

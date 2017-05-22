@@ -35,7 +35,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
             Solution theMazeSolution = searchingAlgorithm.solve(searchableMaze);
             toFile.writeObject(theMazeSolution);
             toClient.writeObject(theMazeSolution);
-
+            System.out.println("something in the way");
 
         } catch (Exception e) {
 

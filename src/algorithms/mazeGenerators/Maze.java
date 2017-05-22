@@ -1,5 +1,6 @@
 package algorithms.mazeGenerators;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * @author Vladislav Sergienko
  * @author Doron Laadan
  */
-public class Maze {
+public class Maze implements Serializable {
 
     /**
      * empty constructor for Maze.
@@ -116,7 +117,7 @@ public class Maze {
      *
      * @param startPosition is the Position we want to set as the start position.
      */
-    protected void setStartPosition(Position startPosition) {
+    public void setStartPosition(Position startPosition) {
         this.startPosition = checkPosition(startPosition) ? startPosition : null;
     }
 
@@ -126,7 +127,7 @@ public class Maze {
      *
      * @param goalPosition is the Position we want to set as the goal position.
      */
-    protected void setGoalPosition(Position goalPosition) {
+    public void setGoalPosition(Position goalPosition) {
         this.goalPosition = (checkPosition(goalPosition) && !goalPosition.equals(this.startPosition)) ? goalPosition : null;
     }
 
@@ -135,7 +136,7 @@ public class Maze {
      *
      * @param data id the new grid of the maze.
      */
-    protected void setData(int[][] data) {
+    public void setData(int[][] data) {
         this.data = data;
     }
 
