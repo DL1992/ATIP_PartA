@@ -6,11 +6,7 @@ import algorithms.mazeGenerators.AMazeGenerator;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.MyMazeGenerator;
 
-import java.io.FileOutputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Arrays;
 
 /**
@@ -20,7 +16,7 @@ public class RunCompressDecompressMaze {
     public static void main(String[] args) {
         int counter = 0;
         for (int k = 102; k < 105; k++) {
-            String mazeFileName = "S:\\savedMaze.maze";
+            String mazeFileName = "savedMaze.maze";
             AMazeGenerator mazeGenerator = new MyMazeGenerator();
             Maze maze = mazeGenerator.generate(k, k); //Generate new maze
 
@@ -50,9 +46,9 @@ public class RunCompressDecompressMaze {
 //            System.out.println();
 //            loadedMaze.print();
             boolean areMazesEquals = Arrays.equals(loadedMaze.toByteArray(), maze.toByteArray());
-            if(areMazesEquals)
+            if (areMazesEquals)
                 counter++;
-            System.out.println(String.format("Mazes equal: %s number is %d" , areMazesEquals, k)); //maze should be equal to loadedMaze
+            System.out.println(String.format("Mazes equal: %s number is %d", areMazesEquals, k)); //maze should be equal to loadedMaze
         }
         System.out.println(counter);
     }

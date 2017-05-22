@@ -33,7 +33,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
             ISearchingAlgorithm searchingAlgorithm = new BestFirstSearch();
 
             Solution theMazeSolution = searchingAlgorithm.solve(searchableMaze);
-            toFile.writeObject(theMazeSolution);
+//            toFile.writeObject(theMazeSolution);
             toClient.writeObject(theMazeSolution);
             System.out.println("something in the way");
 

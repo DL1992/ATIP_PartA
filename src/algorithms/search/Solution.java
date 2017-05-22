@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class Solution implements Serializable {
     ArrayList<AState> solutionPath;
 
-    public Solution(){}
-    public void setSolutionPath( ArrayList<AState> solutionPath){ this.solutionPath=solutionPath; }
+    public Solution() {
+    }
 
     /**
      * constructor for the solution.
@@ -31,6 +31,16 @@ public class Solution implements Serializable {
      */
     public ArrayList<AState> getSolutionPath() {
         return this.solutionPath;
+    }
+
+
+    /**
+     * set's the solution path to the given arrayList.
+     *
+     * @param solutionPath the ArrayList of the solution path.
+     */
+    public void setSolutionPath(ArrayList<AState> solutionPath) {
+        this.solutionPath = solutionPath;
     }
 
     //TODO: change here.

@@ -70,6 +70,12 @@ public class MyCompressorOutputStream extends OutputStream {
                 this.byteCount = 1;
                 this.lastByte = b;
             }
+            if (this.byteCount == 127) {
+                this.out.write(this.lastByte);
+                this.out.write(this.byteCount);
+                this.byteCount = 0;
+                this.isFirstByte = true;
+            }
             if (this.isLastByte) {
                 this.out.write(b);
                 this.out.write(this.byteCount);

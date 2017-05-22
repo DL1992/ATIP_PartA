@@ -15,10 +15,19 @@ import java.util.List;
 public class Maze implements Serializable {
 
     /**
-     * empty constructor for Maze.
-     *
+     * the starting Position of the maze. should never be null or outside the grid.
      */
-    public Maze(){}
+    private Position startPosition;
+
+    /**
+     * the goal Position of the maze. should never be null, outside the grid nor equals to the starting position.
+     */
+    private Position goalPosition;
+
+    /**
+     * the grid og integers that are the maze. should not be null.
+     */
+    private int[][] data;
 
     /**
      * constructor for Maze.
@@ -26,23 +35,16 @@ public class Maze implements Serializable {
      *
      * @param ByteArray is the byte array we decompress information from.
      */
-    public Maze(byte[] ByteArray){
+    public Maze(byte[] ByteArray) {
         setPositionsFromByteArray(ByteArray);
         setDataFromByteArray(ByteArray);
     }
 
     /**
-     * the starting Position of the maze. should never be null or outside the grid.
+     * empty constructor for Maze.
      */
-    private Position startPosition;
-    /**
-     * the goal Position of the maze. should never be null, outside the grid nor equals to the starting position.
-     */
-    private Position goalPosition;
-    /**
-     * the grid og integers that are the maze. should not be null.
-     */
-    private int[][] data;
+    public Maze() {
+    }
 
     /**
      * @return the start Position of the Maze.
@@ -336,24 +338,24 @@ public class Maze implements Serializable {
     private void setDataFromByteArray(byte[] byteArray) {
         int rowIndex = getIntFromByteArray(20, byteArray);
         int colIndex = getIntFromByteArray(25, byteArray);
-        int dataLength = rowIndex*colIndex;
+        int dataLength = rowIndex * colIndex;
         int[] data1D = new int[dataLength];
-        data = new int[rowIndex][colIndex];
+        this.data = new int[rowIndex][colIndex];
         setData1dFromByteArray(data1D, byteArray);
         setDataFrom1D(data1D);
     }
 
     /**
-     *  sets the data1D array with the decompressed information from the byte array given.
+     * sets the data1D array with the decompressed information from the byte array given.
      * (using our secret decompression method).
      *
-     * @param data1D is the array we save the for decompressed information in.
+     * @param data1D    is the array we save the for decompressed information in.
      * @param byteArray is the byte array that we decompress for the required information.
      */
     private void setData1dFromByteArray(int[] data1D, byte[] byteArray) {
         int arrayIndex = 0;
-        for(int i=30; i<byteArray.length; i++){
-            for(int j=0; j<byteArray[i]; j++) {
+        for (int i = 30; i < byteArray.length; i++) {
+            for (int j = 0; j < byteArray[i]; j++) {
                 if (i % 2 == 0) {
                     data1D[arrayIndex] = 0;
                 } else {
@@ -371,26 +373,26 @@ public class Maze implements Serializable {
      */
     private void setDataFrom1D(int[] data1D) {
         int arrayIndex = 0;
-        for(int i=0; i<data[0].length; i++){
-            for(int j=0; j<data.length; j++){
-                data[i][j] = data1D[arrayIndex];
+        for (int i = 0; i < this.data[0].length; i++) {
+            for (int j = 0; j < this.data.length; j++) {
+                this.data[i][j] = data1D[arrayIndex];
                 arrayIndex++;
             }
         }
     }
 
     /**
-     *  gets an integer from the compressed byte array
+     * gets an integer from the compressed byte array
      * (using our secret decompression method).
      *
      * @param startLocation is the start location in the byte array of the required int.
-     * @param byteArray is the byte array we  decompressed information from.
+     * @param byteArray     is the byte array we  decompressed information from.
      * @return the required int.
      */
     private int getIntFromByteArray(int startLocation, byte[] byteArray) {
-        int theInt=0;
-        for(int i=0; i<5; i++){
-            theInt = theInt + (int) (byteArray[startLocation + i]*Math.pow(100,i));
+        int theInt = 0;
+        for (int i = 0; i < 5; i++) {
+            theInt = theInt + (int) (byteArray[startLocation + i] * Math.pow(100, i));
         }
         return theInt;
     }

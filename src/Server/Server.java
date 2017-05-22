@@ -3,6 +3,9 @@ package Server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 //TODO: Check connection ot server (must be on/off). creating thread pool. dealing with server termination.
@@ -18,6 +21,7 @@ public class Server {
     private int port;
     private int listeningInterval;
     private IServerStrategy serverStrategy;
+    private ExecutorService executor;
     private volatile boolean stop;
 
     public Server(int port, int listeningInterval, IServerStrategy serverStrategy) {
@@ -27,6 +31,7 @@ public class Server {
     }
 
     public void start() {
+        this.executor = Executors.newFixedThreadPool(5);
         new Thread(() -> runServer()).start();
     }
 
@@ -35,10 +40,14 @@ public class Server {
             ServerSocket server = new ServerSocket(this.port);
             server.setSoTimeout(this.listeningInterval);
             while (!this.stop) {
-                Socket client = server.accept();
-                new Thread(() -> handleClient(client)).start();
+                try {
+                    Socket client = server.accept();
+                    this.executor.execute(() -> handleClient(client));
+                } catch (SocketTimeoutException e) {
+//                    System.out.println("SocketTimeout!");
+                }
             }
-
+            server.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,13 +61,14 @@ public class Server {
             client.getInputStream().close();
             client.getOutputStream().close();
             client.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+
         }
     }
 
     public void stop() {
         System.out.println("the server has crashed :/");
+        this.executor.shutdown();
         this.stop = true;
     }
 }
