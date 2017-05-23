@@ -13,8 +13,8 @@ public class properties {
         try {
             outToFile = new FileOutputStream("src/config.properties");
             properties.setProperty("ServerMazeGenerateAlgo", "MyMazeGenerator");
-            properties.setProperty("ServerSolveMazeAlgo", "BreadthFirstSearch");
-            properties.setProperty("ServerThreadPoolCount", "5");
+            properties.setProperty("ServerSolveMazeAlgo", /*"BestFirstSearch"*/"DepthFirstSearch");
+            properties.setProperty("ServerThreadPoolCount", "7");
             properties.store(outToFile, "Author: Doron Laadan & Vladislav Sergienko");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -52,7 +52,9 @@ public class properties {
         InputStream inFromFile = null;
         String returnValue = null;
         try {
-            inFromFile = new FileInputStream("src/config.properties");
+            String fileName = "config.properties";
+            inFromFile = properties.class.getClassLoader().getResourceAsStream(fileName);
+//            inFromFile = new FileInputStream("src/config.properties");
             properties.load(inFromFile);
             returnValue = properties.getProperty(propKey);
         } catch (IOException e) {
