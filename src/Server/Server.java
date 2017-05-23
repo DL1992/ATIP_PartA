@@ -31,7 +31,7 @@ public class Server {
     }
 
     public void start() {
-        this.executor = Executors.newFixedThreadPool(5);
+        this.executor = Executors.newFixedThreadPool(Integer.parseInt(properties.getServerThreadPoolCount()));
         new Thread(() -> runServer()).start();
     }
 

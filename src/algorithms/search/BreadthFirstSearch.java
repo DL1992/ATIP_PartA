@@ -3,7 +3,7 @@ package algorithms.search;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
-//TODO: write javadoc.
+
 
 /**
  * This class use the Best First Search algorithm to solve a searching problem.

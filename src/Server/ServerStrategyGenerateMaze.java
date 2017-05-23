@@ -1,12 +1,13 @@
 package Server;
 
 import IO.MyCompressorOutputStream;
+import algorithms.mazeGenerators.AMazeGenerator;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.MyMazeGenerator;
+import algorithms.mazeGenerators.SimpleMazeGenerator;
 
 import java.io.*;
 
-//TODO: saving the compressed maze to file with a unique proper file name.
 
 /**
  * Created by sergayen on 5/16/2017.
@@ -18,10 +19,23 @@ public class ServerStrategyGenerateMaze implements IServerStrategy {
         try {
             ObjectInputStream fromClient = new ObjectInputStream(inFromClient);
             ObjectOutputStream toClient = new ObjectOutputStream(outToClient);
-            byte[] mazeSizes = (byte[]) fromClient.readObject();
+            int[] mazeSizes = (int[]) fromClient.readObject();
             toClient.flush();
+            AMazeGenerator mazeGenerator;
+            String mazeGeneratorAlgo = properties.getServerMazeGenerateAlgo();
 
-            Maze clientMaze = new MyMazeGenerator().generate(mazeSizes[0], mazeSizes[1]);
+            switch (mazeGeneratorAlgo) {
+                case "MyMazeGenerator":
+                    mazeGenerator = new MyMazeGenerator();
+                    break;
+                case "SimpleMazeGenerator":
+                    mazeGenerator = new SimpleMazeGenerator();
+                    break;
+                default:
+                    throw new IllegalArgumentException("no maze Generator Method");
+            }
+
+            Maze clientMaze = mazeGenerator.generate(mazeSizes[0], mazeSizes[1]);
             byte[] byteClientMaze = clientMaze.toByteArray();
             ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
             OutputStream out = new MyCompressorOutputStream(byteOut);

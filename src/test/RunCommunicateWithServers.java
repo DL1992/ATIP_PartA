@@ -26,15 +26,15 @@ public class RunCommunicateWithServers {
         Server solveSearchProblemServer = new Server(5401, 1000, new ServerStrategySolveSearchProblem());
 
         //Starting  servers
-//        mazeGeneratingServer.start();
+        mazeGeneratingServer.start();
         solveSearchProblemServer.start();
 
         //Communicating with servers
-//        CommunicateWithServer1();
+        CommunicateWithServer1();
         CommunicateWithServer2();
 
         //Stopping all servers
-//        mazeGeneratingServer.stop();
+        mazeGeneratingServer.stop();
         solveSearchProblemServer.stop();
     }
 
@@ -47,7 +47,7 @@ public class RunCommunicateWithServers {
                         ObjectOutputStream toServer = new ObjectOutputStream(outToServer);
                         ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
                         toServer.flush();
-                        byte[] mazeDimensions = new byte[]{50, 50};
+                        int[] mazeDimensions = new int[]{50, 50};
                         toServer.writeObject(mazeDimensions); //send maze dimensions to server
                         toServer.flush();
                         byte[] compressedMaze = (byte[]) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server
