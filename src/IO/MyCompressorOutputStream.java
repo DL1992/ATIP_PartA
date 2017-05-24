@@ -51,9 +51,9 @@ public class MyCompressorOutputStream extends OutputStream {
 
     @Override
     /**
-     * the way we compress a bit is by counting the number of times he cane in a row and then writing the int
+     * the way we compress a bit is by counting the number of times it came in a row and then writing the int
      * + the number of times.
-     * we write only  when the current int is ont like the last one.
+     * we write to the stream only when the current int is not like the last one.
      *
      */
     public void write(int b) throws IOException {

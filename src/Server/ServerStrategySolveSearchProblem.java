@@ -8,8 +8,6 @@ import java.io.*;
 //TODO: saving the solution to file with a unique proper file name.
 
 /**
- *
- *
  * @author Vladislav Sergienko
  * @author Doron Laadan
  */
@@ -22,47 +20,47 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
             Maze theMaze = (Maze) fromClient.readObject();
             String filePath = theMaze.toByteArray().toString();
             File f = new File(filePath);
-            if(f.exists() && !f.isDirectory()){
+            if (f.exists() && !f.isDirectory()) {
                 ObjectInputStream fromFile = new ObjectInputStream(new FileInputStream(filePath));
                 Solution theMazeSolution = (Solution) fromFile.readObject();
                 toClient.writeObject(theMazeSolution);
-            }
-            else {
+            } else {
                 ObjectOutputStream toFile = new ObjectOutputStream(new FileOutputStream(filePath));
                 toClient.flush();
                 SearchableMaze searchableMaze = new SearchableMaze(theMaze);
-                ISearchingAlgorithm searchingAlgorithm = new BestFirstSearch();
+                String searchingAlgo = properties.getServerSolveMazeAlgo();
+                ISearchingAlgorithm searchingAlgorithm = useSearch(searchingAlgo);
+
+                //TODO: delete this.
+                System.out.println(searchingAlgorithm.getName());
+
+
                 Solution theMazeSolution = searchingAlgorithm.solve(searchableMaze);
                 toFile.writeObject(theMazeSolution);
                 toClient.writeObject(theMazeSolution);
             }
-            toClient.flush();
-
-            SearchableMaze searchableMaze = new SearchableMaze(theMaze);
-
-            ISearchingAlgorithm searchingAlgorithm;
-            String searchingAlgo = properties.getServerSolveMazeAlgo();
-            switch (searchingAlgo) {
-                case "BreadthFirstSearch":
-                    searchingAlgorithm = new BreadthFirstSearch();
-                    break;
-                case "DepthFirstSearch":
-                    searchingAlgorithm = new DepthFirstSearch();
-                    break;
-                case "BestFirstSearch":
-                    searchingAlgorithm = new BestFirstSearch();
-                    break;
-                default:
-                    throw new IllegalArgumentException("no such search algorithms");
-            }
-            System.out.println(searchingAlgorithm.getName());
-            Solution theMazeSolution = searchingAlgorithm.solve(searchableMaze);
-//            toFile.writeObject(theMazeSolution);
-            toClient.writeObject(theMazeSolution);
-            System.out.println("something in the way");
 
         } catch (Exception e) {
 
         }
+    }
+
+    private ASearchingAlgorithm useSearch(String searchName) {
+        ASearchingAlgorithm searchingAlgorithm;
+        String searchingAlgo = properties.getServerSolveMazeAlgo();
+        switch (searchingAlgo) {
+            case "BreadthFirstSearch":
+                searchingAlgorithm = new BreadthFirstSearch();
+                break;
+            case "DepthFirstSearch":
+                searchingAlgorithm = new DepthFirstSearch();
+                break;
+            case "BestFirstSearch":
+                searchingAlgorithm = new BestFirstSearch();
+                break;
+            default:
+                throw new IllegalArgumentException("no such search algorithms");
+        }
+        return searchingAlgorithm;
     }
 }

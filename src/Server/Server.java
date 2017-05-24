@@ -11,8 +11,6 @@ import java.util.concurrent.Executors;
 //TODO: Check connection ot server (must be on/off). creating thread pool. dealing with server termination.
 
 /**
- *
- *
  * @author Vladislav Sergienko
  * @author Doron Laadan
  */
@@ -66,9 +64,9 @@ public class Server {
     }
 
     public void stop() {
+        this.stop = true;
         System.out.println("the server has crashed :/");
         this.executor.shutdown();
-        this.stop = true;
     }
 }
 

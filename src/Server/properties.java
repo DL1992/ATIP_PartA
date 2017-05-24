@@ -13,7 +13,7 @@ public class properties {
         try {
             outToFile = new FileOutputStream("src/config.properties");
             properties.setProperty("ServerMazeGenerateAlgo", "MyMazeGenerator");
-            properties.setProperty("ServerSolveMazeAlgo", /*"BestFirstSearch"*/"DepthFirstSearch");
+            properties.setProperty("ServerSolveMazeAlgo", "BreadthFirstSearch");
             properties.setProperty("ServerThreadPoolCount", "7");
             properties.store(outToFile, "Author: Doron Laadan & Vladislav Sergienko");
         } catch (FileNotFoundException e) {
@@ -47,6 +47,33 @@ public class properties {
         return threadpoolCount;
     }
 
+    public static void setProperty(String propKey, String propValue) {
+        Properties properties = new Properties();
+        OutputStream outToFile = null;
+        InputStream inFromFile;
+        try {
+            String fileName = "config.properties";
+            inFromFile = properties.class.getClassLoader().getResourceAsStream(fileName);
+            properties.load(inFromFile);
+            outToFile = new FileOutputStream("src/config.properties");
+            properties.setProperty(propKey, propValue);
+            properties.store(outToFile, "Author: Doron Laadan & Vladislav Sergienko");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (null != outToFile) {
+                try {
+                    outToFile.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
     private static String loadProperty(String propKey) {
         Properties properties = new Properties();
         InputStream inFromFile = null;
@@ -54,7 +81,6 @@ public class properties {
         try {
             String fileName = "config.properties";
             inFromFile = properties.class.getClassLoader().getResourceAsStream(fileName);
-//            inFromFile = new FileInputStream("src/config.properties");
             properties.load(inFromFile);
             returnValue = properties.getProperty(propKey);
         } catch (IOException e) {

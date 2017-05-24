@@ -10,8 +10,6 @@ import java.io.*;
 
 
 /**
- *
- *
  * @author Vladislav Sergienko
  * @author Doron Laadan
  */
@@ -24,20 +22,10 @@ public class ServerStrategyGenerateMaze implements IServerStrategy {
             ObjectOutputStream toClient = new ObjectOutputStream(outToClient);
             int[] mazeSizes = (int[]) fromClient.readObject();
             toClient.flush();
-            AMazeGenerator mazeGenerator;
+
             String mazeGeneratorAlgo = properties.getServerMazeGenerateAlgo();
-
-            switch (mazeGeneratorAlgo) {
-                case "MyMazeGenerator":
-                    mazeGenerator = new MyMazeGenerator();
-                    break;
-                case "SimpleMazeGenerator":
-                    mazeGenerator = new SimpleMazeGenerator();
-                    break;
-                default:
-                    throw new IllegalArgumentException("no maze Generator Method");
-            }
-
+            AMazeGenerator mazeGenerator = useMazeGenerator(mazeGeneratorAlgo);
+            
             Maze clientMaze = mazeGenerator.generate(mazeSizes[0], mazeSizes[1]);
             byte[] byteClientMaze = clientMaze.toByteArray();
             ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
@@ -50,5 +38,20 @@ public class ServerStrategyGenerateMaze implements IServerStrategy {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private AMazeGenerator useMazeGenerator(String mazeGeneratorAlgo) {
+        AMazeGenerator mazeGenerator;
+        switch (mazeGeneratorAlgo) {
+            case "MyMazeGenerator":
+                mazeGenerator = new MyMazeGenerator();
+                break;
+            case "SimpleMazeGenerator":
+                mazeGenerator = new SimpleMazeGenerator();
+                break;
+            default:
+                throw new IllegalArgumentException("no maze Generator Method");
+        }
+        return mazeGenerator;
     }
 }
