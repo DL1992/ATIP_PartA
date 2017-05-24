@@ -18,7 +18,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
             ObjectInputStream fromClient = new ObjectInputStream(inFromClient);
             ObjectOutputStream toClient = new ObjectOutputStream(outToClient);
             Maze theMaze = (Maze) fromClient.readObject();
-            String filePath = theMaze.toByteArray().toString();
+            String filePath = "/Solutions/" + theMaze.toByteArray().toString();
             File f = new File(filePath);
             if (f.exists() && !f.isDirectory()) {
                 ObjectInputStream fromFile = new ObjectInputStream(new FileInputStream(filePath));
@@ -28,8 +28,8 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
                 ObjectOutputStream toFile = new ObjectOutputStream(new FileOutputStream(filePath));
                 toClient.flush();
                 SearchableMaze searchableMaze = new SearchableMaze(theMaze);
-                String searchingAlgo = properties.getServerSolveMazeAlgo();
-                ISearchingAlgorithm searchingAlgorithm = useSearch(searchingAlgo);
+                String searchingAlgorithmString = properties.getServerSolveMazeAlgo();
+                ISearchingAlgorithm searchingAlgorithm = useSearch(searchingAlgorithmString);
 
                 //TODO: delete this.
                 System.out.println(searchingAlgorithm.getName());
