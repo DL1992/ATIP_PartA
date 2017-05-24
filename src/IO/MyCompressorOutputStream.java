@@ -5,7 +5,7 @@ import java.io.OutputStream;
 
 /**
  * This class represent a CompressorOutputStream.
- * it uses the decorator design pattern on outputStream in order to compress mazes to a file.
+ * it uses the decorator design pattern on outputStream in order to compress mazes.
  *
  * @author Vladislav Sergienko
  * @author Doron Laadan

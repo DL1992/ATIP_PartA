@@ -10,6 +10,10 @@ import java.io.*;
 
 
 /**
+ * This server strategy generate a maze for the client using a given row and col number.
+ * using the generator class provided in the properties file.
+ * the server sends the client a compressed version of the maze.
+ *
  * @author Vladislav Sergienko
  * @author Doron Laadan
  */
@@ -25,7 +29,7 @@ public class ServerStrategyGenerateMaze implements IServerStrategy {
 
             String mazeGeneratorAlgo = properties.getServerMazeGenerateAlgo();
             AMazeGenerator mazeGenerator = useMazeGenerator(mazeGeneratorAlgo);
-            
+
             Maze clientMaze = mazeGenerator.generate(mazeSizes[0], mazeSizes[1]);
             byte[] byteClientMaze = clientMaze.toByteArray();
             ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
@@ -40,6 +44,13 @@ public class ServerStrategyGenerateMaze implements IServerStrategy {
         }
     }
 
+    /**
+     * this is a helper function to serverStrategy
+     * creates and returns the required maze generator class specified in the properties file
+     *
+     * @param mazeGeneratorAlgo the name of the specified generator class
+     * @return a maze generator specified in the properties file
+     */
     private AMazeGenerator useMazeGenerator(String mazeGeneratorAlgo) {
         AMazeGenerator mazeGenerator;
         switch (mazeGeneratorAlgo) {

@@ -5,7 +5,7 @@ import java.io.InputStream;
 
 /**
  * This class represent a DecompressorOutputStream.
- * it uses the decorator design pattern on inputStream in order to Decompress a file into a Maze.
+ * it uses the decorator design pattern on inputStream in order to Decompress a Maze.
  *
  * @author Vladislav Sergienko
  * @author Doron Laadan
@@ -24,7 +24,7 @@ public class MyDecompressorInputStream extends InputStream {
 
     @Override
     public int read() throws IOException {
-        return in.read();
+        return this.in.read();
     }
 
     @Override
@@ -37,18 +37,17 @@ public class MyDecompressorInputStream extends InputStream {
     public int read(byte[] byteArray) throws IOException {
         int arrayIndex = 0;
         int nextByte = read();
-        while (nextByte != -1)
-        {
+        while (nextByte != -1) {
             int byteNumber = read();
-            if(byteNumber == -1){
+            if (byteNumber == -1) {
                 return arrayIndex;
             }
-            for(int j=0; j<byteNumber; j++){
+            for (int j = 0; j < byteNumber; j++) {
                 byteArray[arrayIndex] = (byte) nextByte;
                 arrayIndex++;
             }
             nextByte = read();
-            if(nextByte == -1){
+            if (nextByte == -1) {
                 return arrayIndex;
             }
         }

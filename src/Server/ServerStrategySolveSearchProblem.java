@@ -6,7 +6,6 @@ import algorithms.search.*;
 import java.io.*;
 import java.util.Arrays;
 
-//TODO: saving the solution to file with a unique proper file name.
 
 /**
  * This server strategy solves a search problem the client provides.
