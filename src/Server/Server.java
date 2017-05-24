@@ -52,8 +52,7 @@ public class Server {
 
     private void handleClient(Socket client) {
         try {
-            System.out.println("Client accepted! yay!");
-            System.out.println(String.format("Handling client with socket: %s", client.toString()));
+            System.out.println(String.format("Handling a client with socket: %s", client.toString()));
             this.serverStrategy.serverStrategy(client.getInputStream(), client.getOutputStream());
             client.getInputStream().close();
             client.getOutputStream().close();
@@ -65,7 +64,7 @@ public class Server {
 
     public void stop() {
         this.stop = true;
-        System.out.println("the server has crashed :/");
+        System.out.println("The server did its job - and therefore it dies now");
         this.executor.shutdown();
     }
 }

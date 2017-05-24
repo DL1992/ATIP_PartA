@@ -25,9 +25,15 @@ public class Maze implements Serializable {
     private Position goalPosition;
 
     /**
-     * the grid og integers that are the maze. should not be null.
+     * the grid of integers that are the representation of the maze. should not be null.
      */
     private int[][] data;
+
+    /**
+     * empty constructor for Maze.
+     */
+    public Maze() {
+    }
 
     /**
      * constructor for Maze.
@@ -38,12 +44,6 @@ public class Maze implements Serializable {
     public Maze(byte[] ByteArray) {
         setPositionsFromByteArray(ByteArray);
         setDataFromByteArray(ByteArray);
-    }
-
-    /**
-     * empty constructor for Maze.
-     */
-    public Maze() {
     }
 
     /**
@@ -68,22 +68,34 @@ public class Maze implements Serializable {
     }
 
     /**
-     * prints the Maze as a grid of 1's and 0's where 1 is a wall and 0 is path.
-     * start position is indicated as S and goal Position as E
-     * should look like
-     * {0,0,1,0,S}
-     * {1,1,1,E,0}
-     * {1,1,0,0,1}
+     * set the start Position of the Maze.
+     * the position must be inside the gird of the maze.
+     *
+     * @param startPosition is the Position we want to set as the start position.
      */
-    public void print() {
-        for (int i = 0; i < this.data.length; i++) {
-            System.out.print("{");
-            for (int j = 0; j < this.data[i].length - 1; j++) {
-                printCell(i, j, false);
-            }
-            printCell(i, this.data[i].length - 1, true);
-        }
+    public void setStartPosition(Position startPosition) {
+        this.startPosition = checkPosition(startPosition) ? startPosition : null;
     }
+
+    /**
+     * set the goal Position of the Maze.
+     * goal position can't be the same as the start position and must be inside the gird of the maze.
+     *
+     * @param goalPosition is the Position we want to set as the goal position.
+     */
+    public void setGoalPosition(Position goalPosition) {
+        this.goalPosition = (checkPosition(goalPosition) && !goalPosition.equals(this.startPosition)) ? goalPosition : null;
+    }
+
+    /**
+     * set tha grid of the maze.
+     *
+     * @param data id the new grid of the maze.
+     */
+    public void setData(int[][] data) {
+        this.data = data;
+    }
+
 
     /**
      * a helper method for print, prints every cell in the grid according to its place and status.
@@ -114,32 +126,21 @@ public class Maze implements Serializable {
     }
 
     /**
-     * set the start Position of the Maze.
-     * the position must be inside the gird of the maze.
-     *
-     * @param startPosition is the Position we want to set as the start position.
+     * prints the Maze as a grid of 1's and 0's where 1 is a wall and 0 is path.
+     * start position is indicated as S and goal Position as E
+     * should look like
+     * {0,0,1,0,S}
+     * {1,1,1,E,0}
+     * {1,1,0,0,1}
      */
-    public void setStartPosition(Position startPosition) {
-        this.startPosition = checkPosition(startPosition) ? startPosition : null;
-    }
-
-    /**
-     * set the goal Position of the Maze.
-     * goal position can't be the same as the start position and must be inside the gird of the maze.
-     *
-     * @param goalPosition is the Position we want to set as the goal position.
-     */
-    public void setGoalPosition(Position goalPosition) {
-        this.goalPosition = (checkPosition(goalPosition) && !goalPosition.equals(this.startPosition)) ? goalPosition : null;
-    }
-
-    /**
-     * set tha grid of the maze.
-     *
-     * @param data id the new grid of the maze.
-     */
-    public void setData(int[][] data) {
-        this.data = data;
+    public void print() {
+        for (int i = 0; i < this.data.length; i++) {
+            System.out.print("{");
+            for (int j = 0; j < this.data[i].length - 1; j++) {
+                printCell(i, j, false);
+            }
+            printCell(i, this.data[i].length - 1, true);
+        }
     }
 
     /**

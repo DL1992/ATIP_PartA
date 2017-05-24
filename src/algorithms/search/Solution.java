@@ -46,9 +46,8 @@ public class Solution implements Serializable {
         this.solutionPath = solutionPath;
     }
 
-    //TODO: change here.
     @Override
     public String toString() {
-        return "yay";
+        return "";
     }
 }

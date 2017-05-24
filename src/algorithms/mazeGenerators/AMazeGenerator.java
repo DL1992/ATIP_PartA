@@ -9,6 +9,10 @@ import java.util.Random;
  * @author Doron Laadan
  */
 public abstract class AMazeGenerator implements IMazeGenerator {
+
+    /**
+     * a random number generator we use for the random parts of maze generation.
+     */
     protected Random randomGenerator = new Random();
 
     @Override
@@ -16,10 +20,10 @@ public abstract class AMazeGenerator implements IMazeGenerator {
 
     @Override
     public long measureAlgorithmTimeMillis(int numOfRows, int numOfCols) {
-        long lstartTime = System.currentTimeMillis();
+        long lStartTime = System.currentTimeMillis();
         generate(numOfRows, numOfCols); // We don't care about catching the generated maze just how long it took to generate.
         long lendTime = System.currentTimeMillis();
-        return lendTime - lstartTime;
+        return lendTime - lStartTime;
     }
 
     /**
@@ -44,7 +48,7 @@ public abstract class AMazeGenerator implements IMazeGenerator {
      *
      * @param numOfRows the number of rows in the maze
      * @param numOfCols the number of cols in the maze
-     * @return a new Position representing a position in a maze
+     * @return a Position representing a position in a maze
      */
     protected Position createPosition(int numOfRows, int numOfCols) {
         int positionRowIndex = this.randomGenerator.nextInt(numOfRows);

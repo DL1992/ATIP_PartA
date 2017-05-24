@@ -5,8 +5,6 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 /**
- *
- *
  * @author Vladislav Sergienko
  * @author Doron Laadan
  */
@@ -25,7 +23,8 @@ public class Client {
     public void communicateWithServer() {
         try {
             Socket theServer = new Socket(this.IP, this.port);
-            System.out.println("connected to server");
+            System.out.println();
+            System.out.println("Successfully connected to server");
             this.clientStrategy.clientStrategy(theServer.getInputStream(), theServer.getOutputStream());
             theServer.close();
         } catch (IOException e) {

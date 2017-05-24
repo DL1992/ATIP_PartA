@@ -32,9 +32,6 @@ public class RunCommunicateWithServers {
         //Communicating with servers
         CommunicateWithServer1();
         CommunicateWithServer2();
-        CommunicateWithServer2();
-        CommunicateWithServer2();
-        CommunicateWithServer2();
 
 
         //Stopping all servers

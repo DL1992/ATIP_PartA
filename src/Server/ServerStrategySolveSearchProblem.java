@@ -9,6 +9,10 @@ import java.util.Arrays;
 //TODO: saving the solution to file with a unique proper file name.
 
 /**
+ * This server strategy solves a search problem the client provides.
+ * using the searching algorithm provided in the properties file.
+ * it also checks if a solution for this maze already exists - and returns it if it does.
+ *
  * @author Vladislav Sergienko
  * @author Doron Laadan
  */
@@ -20,14 +24,16 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
             ObjectOutputStream toClient = new ObjectOutputStream(outToClient);
             Maze theMaze = (Maze) fromClient.readObject();
 
-            File dir = new File("src/solution");
+            // creates the solution dir if it doesn't exist
+            File dir = new File("src/Solution Bag");
             if (!dir.exists() || !dir.isDirectory()) {
                 dir.mkdirs();
             }
-
-
-            String filePath = "src/solution/" + (Arrays.toString(theMaze.toByteArray()).hashCode());
+            String filePath = "src/Solution Bag/" + (Arrays.toString(theMaze.toByteArray()).hashCode());
             File file = new File(filePath);
+
+            //if a solution exists - return it;
+            // otherwise - solve the search problem given using the searching algorithm provided - add it to the solution bag and return it
             if (file.exists() && !file.isDirectory()) {
                 ObjectInputStream fromFile = new ObjectInputStream(new FileInputStream(filePath));
                 Solution theMazeSolution = (Solution) fromFile.readObject();
@@ -38,11 +44,6 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
                 SearchableMaze searchableMaze = new SearchableMaze(theMaze);
                 String searchingAlgorithmString = properties.getServerSolveMazeAlgo();
                 ISearchingAlgorithm searchingAlgorithm = useSearch(searchingAlgorithmString);
-
-                //TODO: delete this.
-                System.out.println(searchingAlgorithm.getName());
-
-
                 Solution theMazeSolution = searchingAlgorithm.solve(searchableMaze);
                 toFile.writeObject(theMazeSolution);
                 toClient.writeObject(theMazeSolution);
@@ -53,6 +54,13 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
         }
     }
 
+    /**
+     * this is a helper function to serverStrategy
+     * creates and returns the required searching algorithm specified in the properties file
+     *
+     * @param searchName the name of the specified searching algorithm
+     * @return the searching algorithm specified in the properties file
+     */
     private ASearchingAlgorithm useSearch(String searchName) {
         ASearchingAlgorithm searchingAlgorithm;
         String searchingAlgo = properties.getServerSolveMazeAlgo();
@@ -67,7 +75,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
                 searchingAlgorithm = new BestFirstSearch();
                 break;
             default:
-                throw new IllegalArgumentException("no such search algorithms");
+                throw new IllegalArgumentException("The search algorithm you required was not defined");
         }
         return searchingAlgorithm;
     }
