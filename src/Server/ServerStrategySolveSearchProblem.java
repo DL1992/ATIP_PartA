@@ -22,7 +22,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
 
             File dir = new File("src/solution");
             if (!dir.exists() || !dir.isDirectory()) {
-                dir.mkdir();
+                dir.mkdirs();
             }
 
 

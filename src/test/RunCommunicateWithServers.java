@@ -32,6 +32,9 @@ public class RunCommunicateWithServers {
         //Communicating with servers
         CommunicateWithServer1();
         CommunicateWithServer2();
+        CommunicateWithServer2();
+        CommunicateWithServer2();
+        CommunicateWithServer2();
 
 
         //Stopping all servers
@@ -78,7 +81,7 @@ public class RunCommunicateWithServers {
                         ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
                         toServer.flush();
                         MyMazeGenerator mg = new MyMazeGenerator();
-                        Maze maze = mg.generate(50, 50);
+                        Maze maze = mg.generate(2, 2);
                         maze.print();
                         toServer.writeObject(maze); //send maze to server
                         toServer.flush();
