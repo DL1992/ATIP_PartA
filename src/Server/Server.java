@@ -11,8 +11,7 @@ import java.util.concurrent.Executors;
 //TODO: Check connection ot server (must be on/off). creating thread pool. dealing with server termination.
 
 /**
- * This class is an object adapter class.
- * serachble maze is a searching problem of the maze domain.
+ *
  *
  * @author Vladislav Sergienko
  * @author Doron Laadan

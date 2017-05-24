@@ -5,7 +5,10 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 /**
- * Created by user on 16/05/2017.
+ *
+ *
+ * @author Vladislav Sergienko
+ * @author Doron Laadan
  */
 public class Client {
     InetAddress IP;

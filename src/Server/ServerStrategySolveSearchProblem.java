@@ -11,8 +11,7 @@ import java.io.*;
 //TODO: saving the solution to file with a unique proper file name.
 
 /**
- * This class is an object adapter class.
- * serachble maze is a searching problem of the maze domain.
+ *
  *
  * @author Vladislav Sergienko
  * @author Doron Laadan
@@ -23,20 +22,23 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
         try {
             ObjectInputStream fromClient = new ObjectInputStream(inFromClient);
             ObjectOutputStream toClient = new ObjectOutputStream(outToClient);
-            ObjectOutputStream toFile = new ObjectOutputStream(new FileOutputStream("a"));
-
             Maze theMaze = (Maze) fromClient.readObject();
-            toClient.flush();
-
-            SearchableMaze searchableMaze = new SearchableMaze(theMaze);
-
-            ISearchingAlgorithm searchingAlgorithm = new BestFirstSearch();
-
-            Solution theMazeSolution = searchingAlgorithm.solve(searchableMaze);
-//            toFile.writeObject(theMazeSolution);
-            toClient.writeObject(theMazeSolution);
-            System.out.println("something in the way");
-
+            String filePath = theMaze.toByteArray().toString();
+            File f = new File(filePath);
+            if(f.exists() && !f.isDirectory()){
+                ObjectInputStream fromFile = new ObjectInputStream(new FileInputStream(filePath));
+                Solution theMazeSolution = (Solution) fromFile.readObject();
+                toClient.writeObject(theMazeSolution);
+            }
+            else {
+                ObjectOutputStream toFile = new ObjectOutputStream(new FileOutputStream(filePath));
+                toClient.flush();
+                SearchableMaze searchableMaze = new SearchableMaze(theMaze);
+                ISearchingAlgorithm searchingAlgorithm = new BestFirstSearch();
+                Solution theMazeSolution = searchingAlgorithm.solve(searchableMaze);
+                toFile.writeObject(theMazeSolution);
+                toClient.writeObject(theMazeSolution);
+            }
         } catch (Exception e) {
 
         }

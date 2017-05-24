@@ -14,6 +14,9 @@ import java.util.ArrayList;
 public class Solution implements Serializable {
     ArrayList<AState> solutionPath;
 
+    /**
+     * empty constructor for Solution.
+     */
     public Solution() {
     }
 

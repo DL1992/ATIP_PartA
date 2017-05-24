@@ -162,10 +162,17 @@ public class Maze implements Serializable {
         return false;
     }
 
-    public boolean checkIndexes(int i, int j) {
+    /**
+     * check if the given indexes are legal for the Maze, legal means that it is inside the grid.
+     *
+     * @param row is the row we want to check for the maze.
+     * @param col is the col we want to check for the maze.
+     * @return true if the indexes are inside the gird of the maze, false otherwise.
+     */
+    public boolean checkIndexes(int row, int col) {
         if (this.data != null) {
-            if (i < this.data.length && i >= 0) {
-                if (j >= 0 && j < this.data[i].length) {
+            if (row < this.data.length && row >= 0) {
+                if (col >= 0 && col < this.data[row].length) {
                     return true;
                 }
             }

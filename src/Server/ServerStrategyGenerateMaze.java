@@ -9,7 +9,10 @@ import java.io.*;
 //TODO: saving the compressed maze to file with a unique proper file name.
 
 /**
- * Created by sergayen on 5/16/2017.
+ *
+ *
+ * @author Vladislav Sergienko
+ * @author Doron Laadan
  */
 public class ServerStrategyGenerateMaze implements IServerStrategy {
 
