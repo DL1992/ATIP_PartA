@@ -10,7 +10,10 @@ import java.io.*;
 
 
 /**
- * Created by sergayen on 5/16/2017.
+ *
+ *
+ * @author Vladislav Sergienko
+ * @author Doron Laadan
  */
 public class ServerStrategyGenerateMaze implements IServerStrategy {
 

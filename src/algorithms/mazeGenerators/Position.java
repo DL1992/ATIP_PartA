@@ -17,6 +17,9 @@ public class Position implements Serializable {
     static HashMap<String, Position> posPool = new HashMap<>();
 
 
+    /**
+     * empty constructor for Position.
+     */
     public Position(){}
 
 
@@ -61,7 +64,18 @@ public class Position implements Serializable {
         return this.columnIndex;
     }
 
+    /**
+     * set the row index of the Position.
+     *
+     * @param rowIndex is the row index we want to set as the row index for this position.
+     */
     public void setRowIndex( int rowIndex ) { this.rowIndex= rowIndex; }
+
+    /**
+     * set the column index of the Position.
+     *
+     * @param columnIndex is the column index we want to set as the column index for this position.
+     */
     public void setColumnIndex( int columnIndex ) { this.columnIndex = columnIndex; }
 
     @Override

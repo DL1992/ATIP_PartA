@@ -14,8 +14,10 @@ public abstract class AState implements Comparable<AState>,Serializable {
     protected int cost;
     protected AState cameFrom;
 
+    /**
+     * empty constructor for AState.
+     */
     public AState(){}
-
 
     /**
      * constructor for the Astate.
@@ -30,10 +32,11 @@ public abstract class AState implements Comparable<AState>,Serializable {
         this.cameFrom = cameFrom;
     }
 
-    public String getState() {
-        return state;
-    }
-
+    /**
+     * set the state of the Astate.
+     *
+     * @param state the new state of the Astate.
+     */
     public void setState(String state) {
         this.state = state;
     }
@@ -54,6 +57,13 @@ public abstract class AState implements Comparable<AState>,Serializable {
      */
     public void setCameFrom(AState cameFrom) {
         this.cameFrom = cameFrom;
+    }
+
+    /**
+     * @return the state of the Astate.
+     */
+    public String getState() {
+        return state;
     }
 
     /**

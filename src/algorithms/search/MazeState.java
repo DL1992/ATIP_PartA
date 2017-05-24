@@ -13,6 +13,10 @@ import java.io.Serializable;
  */
 public class MazeState extends AState implements Serializable {
     private Position position;
+
+    /**
+     * empty constructor for MazeState.
+     */
     public MazeState(){}
 
     /**
@@ -34,7 +38,14 @@ public class MazeState extends AState implements Serializable {
     public Position getPosition() {
         return this.position;
     }
-    public void setPosition(Position pos){this.position = pos;}
+
+    /**
+     * set the Position of the MazeState.
+     *
+     * @param position is the Position we want to set as the position for this maze state.
+     */
+    public void setPosition(Position position){this.position = position;}
+
     @Override
     public boolean equals(AState other) {
         if (other != null) {
