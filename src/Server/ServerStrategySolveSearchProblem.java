@@ -4,6 +4,7 @@ import algorithms.mazeGenerators.Maze;
 import algorithms.search.*;
 
 import java.io.*;
+import java.util.Arrays;
 
 //TODO: saving the solution to file with a unique proper file name.
 
@@ -19,13 +20,13 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
             ObjectOutputStream toClient = new ObjectOutputStream(outToClient);
             Maze theMaze = (Maze) fromClient.readObject();
 
-            File dir = new File("/solution");
+            File dir = new File("src/solution");
             if (!dir.exists() || !dir.isDirectory()) {
                 dir.mkdir();
             }
 
 
-            String filePath = "/solution/" + theMaze.toByteArray().toString();
+            String filePath = "src/solution/" + (Arrays.toString(theMaze.toByteArray()).hashCode());
             File file = new File(filePath);
             if (file.exists() && !file.isDirectory()) {
                 ObjectInputStream fromFile = new ObjectInputStream(new FileInputStream(filePath));

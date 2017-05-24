@@ -33,6 +33,7 @@ public class RunCommunicateWithServers {
         CommunicateWithServer1();
         CommunicateWithServer2();
 
+
         //Stopping all servers
         mazeGeneratingServer.stop();
         solveSearchProblemServer.stop();
