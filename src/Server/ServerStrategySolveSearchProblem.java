@@ -18,7 +18,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
             ObjectInputStream fromClient = new ObjectInputStream(inFromClient);
             ObjectOutputStream toClient = new ObjectOutputStream(outToClient);
             Maze theMaze = (Maze) fromClient.readObject();
-            String filePath = "/Solutions/" + theMaze.toByteArray().toString();
+            String filePath = theMaze.toByteArray().toString();
             File f = new File(filePath);
             if (f.exists() && !f.isDirectory()) {
                 ObjectInputStream fromFile = new ObjectInputStream(new FileInputStream(filePath));
